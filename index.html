@@ -702,7 +702,7 @@ const STUDIED = [
 ];
 const DSA = {
   // Counts come from the Java solutions in E:\dsa-java-solutions. Set `repo` to its GitHub URL once pushed.
-  solved: "150+", profile: "", repo: "https://github.com/yg7276197271/dsa-java-solutions",
+  solved: "150+", profile: "", repo: "https://github.com/yg7276197271/dsa-java-solutions", notes: "https://github.com/yg7276197271/backend-engineering-notes",
   topics: ["Arrays & two pointers", "Sliding window", "Hashing", "Strings", "Stacks", "Trees", "Heaps / Top-K", "Dynamic programming"],
   breakdown: [
     ["Dynamic programming", "~27 problems, each as recursion → memoization → tabulation: knapsack, LCS, LIS, edit distance, DP on grids and subsets"],
@@ -822,6 +822,7 @@ ANSWERS.lab = () => `<p>Outside the day job I practise design end to end. My lab
     <ul>
       <li><b>${Object.keys(HLD).length} system designs</b>: ${Object.values(HLD).map(d => d.name).join(", ")}, each with the trade-offs I weighed.</li>
       <li><b>${LLD.length} low-level designs</b> covering ${PATTERNS.length} design patterns, plus my own LRU/LFU cache and concurrency code.</li>
+      <li><b>228 revision topics</b> across Java, Spring, Kafka, design and platform, written up in my <a href="${DSA.notes}" target="_blank" rel="noopener">notes repo</a>.</li>
       <li><b>DSA</b>: ${DSA.solved} problems coded in Java, from DP and graphs to greedy and trees.</li>
     </ul>
     ${follow(...Object.entries(HLD).slice(0, 3).map(([k, d]) => [d.name, `#/lab/${k}`]), ["Open the lab", "#/lab"])}`;
@@ -993,6 +994,7 @@ const VIEWS = {
 
     <div class="lab-h"><h2>What I've studied</h2><small>Topic map</small></div>
     <div class="edu">${STUDIED.map(([area, items]) => `<div><b>${area}</b>${items.join(" · ")}</div>`).join("")}</div>
+    <div class="follow" style="margin-top:14px"><a href="${DSA.notes}" target="_blank" rel="noopener">Read the full notes on GitHub ↗</a></div>
 
     <p class="credits"><b>Learned from:</b> Hello Interview · Concept && Coding · Striver (takeUforward) · Gaurav Sen · Java Brains · CodeDecode. Designs and summaries on this page are my own write-ups.</p>`,
 
