@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="en" data-style="teal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yogesh Joshi — Lead Java Engineer</title>
+<meta name="description" content="Yogesh Joshi, Lead Java Developer with 11+ years building distributed, Kafka-driven fintech and security platforms. Ask the portfolio agent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f6f5; --surface: #ffffff; --surface-2: #eaf1f0; --ink: #142321; --ink-2: #4a5c59; --ink-3: #7d8d8a;
+  --line: #d9e3e1; --accent: #1f7f7a; --accent-ink: #ffffff; --accent-soft: #d6ecea; --warm: #c8743c;
+  --shadow: 0 1px 2px rgba(20,35,33,.06), 0 8px 24px rgba(20,35,33,.06);
+  --radius: 14px;
+  --serif: "Fraunces", Georgia, serif; --sans: "Inter", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+:root[data-style="terracotta"] { --bg: #f7f3ee; --surface: #fffdf9; --surface-2: #efe7dc; --ink: #2a2118; --ink-2: #5e5246; --ink-3: #93867a; --line: #e4d9cc; --accent: #b85a35; --accent-soft: #f3dfd3; --warm: #b85a35; }
+:root[data-style="graphite"] { --bg: #f5f5f4; --surface: #ffffff; --surface-2: #ececea; --ink: #18181b; --ink-2: #52525b; --ink-3: #8a8a93; --line: #e2e2df; --accent: #18181b; --accent-soft: #e7e7e4; --warm: #10a37f; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0e1615; --surface: #152120; --surface-2: #1b2b29; --ink: #e6efed; --ink-2: #a9bab7; --ink-3: #748683; --line: #263735; --accent: #4fbdb5; --accent-ink: #062120; --accent-soft: #1d3a37; --warm: #e39a64; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); }
+  :root:not([data-theme="light"])[data-style="terracotta"] { --bg: #181310; --surface: #211a15; --surface-2: #2b221b; --ink: #f1e9e1; --ink-2: #c2b4a6; --ink-3: #8c7e71; --line: #3a2f26; --accent: #e08a62; --accent-ink: #1f120b; --accent-soft: #3d2619; }
+  :root:not([data-theme="light"])[data-style="graphite"] { --bg: #111113; --surface: #19191c; --surface-2: #222226; --ink: #ececee; --ink-2: #b0b0b8; --ink-3: #7c7c85; --line: #2e2e33; --accent: #ececee; --accent-ink: #111113; --accent-soft: #2a2a2f; --warm: #19c37d; }
+}
+:root[data-theme="dark"] { --bg: #0e1615; --surface: #152120; --surface-2: #1b2b29; --ink: #e6efed; --ink-2: #a9bab7; --ink-3: #748683; --line: #263735; --accent: #4fbdb5; --accent-ink: #062120; --accent-soft: #1d3a37; --warm: #e39a64; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); }
+:root[data-theme="dark"][data-style="terracotta"] { --bg: #181310; --surface: #211a15; --surface-2: #2b221b; --ink: #f1e9e1; --ink-2: #c2b4a6; --ink-3: #8c7e71; --line: #3a2f26; --accent: #e08a62; --accent-ink: #1f120b; --accent-soft: #3d2619; }
+:root[data-theme="dark"][data-style="graphite"] { --bg: #111113; --surface: #19191c; --surface-2: #222226; --ink: #ececee; --ink-2: #b0b0b8; --ink-3: #7c7c85; --line: #2e2e33; --accent: #ececee; --accent-ink: #111113; --accent-soft: #2a2a2f; --warm: #19c37d; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; transition: background .2s; }
+button, select { font: inherit; color: inherit; cursor: pointer; }
+a { color: var(--accent); }
+[hidden] { display: none !important; }
+
+.app { display: grid; grid-template-columns: 248px minmax(0, 1fr) 340px; height: 100vh; }
+
+/* Sidebar */
+.side { border-right: 1px solid var(--line); padding: 22px 16px 16px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; background: var(--bg); }
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 6px; text-decoration: none; color: var(--ink); }
+.mark { width: 34px; height: 34px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 600 15px var(--serif); flex: none; }
+.brand b { display: block; font: 600 18px/1.1 var(--serif); }
+.brand small { color: var(--ink-3); font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.new-chat { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 9px 12px; text-align: left; display: flex; justify-content: space-between; }
+.new-chat:hover { border-color: var(--accent); }
+.nav-label { color: var(--ink-3); font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin: 0 8px 6px; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav a { border-radius: 9px; padding: 8px 10px; display: flex; align-items: center; gap: 10px; color: var(--ink-2); text-decoration: none; }
+.nav a:hover, .nav a.on { background: var(--surface-2); color: var(--ink); }
+.nav .ico { width: 18px; text-align: center; color: var(--accent); }
+.nav .badge { margin-left: auto; font: 500 10px var(--mono); border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; color: var(--ink-3); }
+.topics { list-style: none; margin: 0; padding: 0 8px; color: var(--ink-2); font-size: 13.5px; }
+.topics li { padding: 3px 0; }
+.topics li::before { content: "•"; color: var(--warm); margin-right: 8px; }
+.me { margin-top: auto; display: flex; gap: 10px; align-items: center; padding: 12px 6px 0; border-top: 1px solid var(--line); }
+.photo { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex: none; }
+.me .mark { width: 38px; height: 38px; border-radius: 50%; font-size: 13px; }
+.me b { display: block; font-size: 13.5px; }
+.me small { color: var(--ink-3); font-size: 12px; }
+.side-links { display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; }
+.side-links a { display: flex; justify-content: space-between; color: var(--ink); text-decoration: none; padding: 7px 6px; border-bottom: 1px solid var(--line); }
+.side-links .row { display: flex; justify-content: space-between; padding: 7px 6px; }
+.side-links .row a { border: 0; padding: 0; color: var(--ink-2); }
+
+/* Main */
+.main { display: flex; flex-direction: column; min-width: 0; height: 100vh; }
+.topbar { display: flex; align-items: center; gap: 10px; padding: 12px 28px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--ink-3); }
+.crumbs b { color: var(--ink-2); font-weight: 500; }
+.topbar .spacer { flex: 1; }
+.topbar select, .icon-btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 4px 8px; font-size: 13px; color: var(--ink-2); }
+.pill { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font: 500 11px var(--mono); color: var(--ink-3); }
+.pill::before { content: "●"; color: var(--warm); margin-right: 6px; font-size: 8px; vertical-align: 2px; }
+.scroll { flex: 1; overflow-y: auto; padding: 36px 40px 24px; }
+.inner { max-width: 780px; margin: 0 auto; }
+.menu-btn { display: none; }
+
+.eyebrow { font: 500 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--warm); }
+.eyebrow::before { content: "◆ "; font-size: 8px; vertical-align: 2px; }
+.view-title { font: 400 clamp(32px, 4.6vw, 50px)/1.08 var(--serif); margin: 12px 0 14px; letter-spacing: -.01em; text-wrap: balance; }
+.view-title em { font-style: normal; color: var(--accent); }
+.lede { color: var(--ink-2); font-size: 17px; max-width: 580px; margin: 0 0 6px; }
+
+/* Hero */
+.hero-top { display: grid; grid-template-columns: 1fr 220px; gap: 20px; align-items: center; }
+.orb { position: relative; width: 210px; height: 210px; margin: 0 auto; }
+.orb .ring { position: absolute; inset: 0; border: 1px dashed var(--line); border-radius: 50%; animation: spin 40s linear infinite; }
+.orb .ring.r2 { inset: 22px; border-style: solid; animation-duration: 28s; animation-direction: reverse; }
+.orb .core { position: absolute; inset: 58px; border-radius: 26px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-size: 40px; box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 35%, transparent); animation: breathe 5s ease-in-out infinite; }
+.orb .float { position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; font: 500 10.5px var(--mono); color: var(--ink-2); animation: bob 6s ease-in-out infinite; }
+.orb .f1 { top: 14px; right: 0; } .orb .f2 { bottom: 34px; left: -6px; animation-delay: -2s; } .orb .f3 { top: 52px; left: -10px; animation-delay: -4s; }
+.orb small { position: absolute; bottom: -6px; width: 100%; text-align: center; font: 500 9.5px var(--mono); letter-spacing: .12em; color: var(--ink-3); text-transform: uppercase; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes breathe { 50% { transform: scale(1.04); } }
+@keyframes bob { 50% { transform: translateY(-6px); } }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); margin: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stat { padding: 16px 16px 16px 0; }
+.stat + .stat { border-left: 1px solid var(--line); padding-left: 18px; }
+.stat b { display: block; font: 600 21px var(--serif); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--ink-3); font-size: 13px; }
+
+.agent-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); }
+.agent-head { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+.agent-head small { font: 500 10px var(--mono); color: var(--ink-3); letter-spacing: .08em; text-transform: uppercase; }
+.spark { color: var(--warm); font-size: 18px; }
+.agent-card h2 { font: 400 24px/1.25 var(--serif); margin: 12px 0 6px; }
+.agent-card > p { color: var(--ink-2); margin: 0 0 16px; }
+.starters { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.starter { border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 12px 14px; text-align: left; display: flex; gap: 12px; align-items: flex-start; transition: border-color .15s, transform .15s; }
+.starter:hover { border-color: var(--accent); transform: translateY(-1px); }
+.starter .ico { color: var(--accent); font-size: 17px; line-height: 1.3; }
+.starter b { display: block; font-weight: 600; }
+.starter small { color: var(--ink-3); font-size: 13px; }
+.persona { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; color: var(--ink-2); font-size: 13.5px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+.chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Chat */
+.msg { display: flex; gap: 12px; margin: 22px 0; animation: rise .25s ease-out; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+.avatar { flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font-size: 14px; }
+.msg.bot .avatar { background: var(--accent-soft); color: var(--accent); }
+.msg.you .avatar { background: var(--surface-2); color: var(--ink-2); }
+.bubble { min-width: 0; flex: 1; }
+.who { font-size: 12.5px; font-weight: 600; color: var(--ink-3); margin-bottom: 4px; }
+.bubble p { margin: 0 0 10px; }
+.bubble ul { margin: 0 0 10px; padding-left: 18px; }
+.bubble li { margin-bottom: 4px; }
+.bubble h3 { font: 600 18px var(--serif); margin: 0 0 4px; }
+.meta { color: var(--ink-3); font: 500 12px var(--mono); margin-bottom: 10px; }
+.metric { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.source { display: inline-block; margin-top: 4px; color: var(--ink-3); font: 500 11.5px var(--mono); }
+.follow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.follow button, .follow a { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: 13px; text-decoration: none; color: var(--ink); }
+.follow button:hover, .follow a:hover { border-color: var(--accent); color: var(--accent); }
+.typing span { display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; background: var(--ink-3); animation: blink 1s infinite; }
+.typing span:nth-child(2) { animation-delay: .15s; } .typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes blink { 50% { opacity: .25; } }
+
+/* Work grid */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: border-color .15s, transform .15s; }
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card .num { display: flex; justify-content: space-between; font: 500 12px var(--mono); color: var(--ink-3); margin-bottom: 26px; }
+.card .domain { font: 500 10.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--warm); }
+.card h3 { font: 400 26px var(--serif); margin: 6px 0 8px; }
+.card p { color: var(--ink-2); font-size: 14px; margin: 0 0 14px; flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font: 500 11.5px var(--mono); border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 2px 8px; color: var(--ink-2); }
+.more-link { display: inline-block; margin-top: 22px; text-decoration: none; }
+
+/* Journey */
+.tl { margin-top: 30px; border-left: 1px solid var(--line); padding-left: 26px; }
+.tl-item { position: relative; padding-bottom: 28px; }
+.tl-item::before { content: ""; position: absolute; left: -31px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); }
+.tl-item.now::before { background: var(--accent); }
+.tl-date { font: 500 11.5px var(--mono); color: var(--warm); letter-spacing: .06em; text-transform: uppercase; }
+.tl-item h3 { font: 600 19px var(--serif); margin: 4px 0 0; }
+.tl-role { color: var(--ink-3); font-size: 13.5px; margin-bottom: 6px; }
+.tl-item p { color: var(--ink-2); margin: 0; }
+.tl-item a { font-size: 13.5px; text-decoration: none; }
+.edu { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+.edu div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--ink-2); }
+.edu b { display: block; color: var(--ink); }
+.section-h { font: 400 24px var(--serif); margin: 34px 0 6px; }
+
+/* Fit explorer */
+.fit-form { margin-top: 26px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.fit-form label { display: flex; justify-content: space-between; font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+.fit-form label small { font-weight: 400; color: var(--ink-3); font-size: 12.5px; }
+textarea.jd { width: 100%; min-height: 160px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--sans); resize: vertical; }
+textarea.jd:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.fit-row { display: flex; align-items: center; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+.fit-row small { color: var(--ink-3); font-size: 12.5px; flex: 1; }
+.primary { border: 0; background: var(--accent); color: var(--accent-ink); border-radius: 10px; padding: 9px 18px; font-weight: 600; }
+.primary:disabled { opacity: .45; cursor: not-allowed; }
+.fit-result { margin-top: 24px; }
+.fit-result h2 { font: 400 28px var(--serif); margin: 0 0 4px; }
+.checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin: 14px 0 22px; }
+.check { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 13.5px; }
+.check b { display: block; color: var(--accent); font-size: 14px; }
+.check b::before { content: "✓ "; }
+.check span { color: var(--ink-3); }
+.gap-box { background: var(--surface-2); border-radius: 12px; padding: 14px 16px; }
+.gap-box b { font-family: var(--serif); font-size: 17px; font-weight: 600; }
+.gap-box .tags { margin: 8px 0; }
+.fine { color: var(--ink-3); font-size: 13px; }
+
+/* Project detail */
+.detail-head { display: flex; gap: 16px; align-items: center; margin: 18px 0 8px; }
+.logo { width: 54px; height: 54px; border-radius: 14px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font: 600 18px var(--serif); flex: none; }
+.detail-head h1 { font: 400 32px/1.1 var(--serif); margin: 0; }
+.detail-head .badge { font: 500 10.5px var(--mono); background: var(--warm); color: #fff; border-radius: 6px; padding: 1px 7px; vertical-align: 6px; margin-left: 6px; }
+.detail-meta { color: var(--ink-3); font-size: 13.5px; }
+.block-h { font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 8px; }
+.detail p { color: var(--ink-2); }
+.detail ul { color: var(--ink-2); padding-left: 18px; }
+.detail li { margin-bottom: 6px; }
+.outcomes { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.outcome { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.outcome b { display: block; font: 600 20px var(--serif); color: var(--accent); font-variant-numeric: tabular-nums; }
+.outcome span { font-size: 13px; color: var(--ink-2); }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); }
+.pager a { text-decoration: none; font-size: 14px; }
+
+/* Notes */
+.quote { background: var(--surface); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 24px 0; font: italic 400 17px/1.5 var(--serif); color: var(--ink-2); }
+.quote cite { display: block; margin-top: 6px; font: 500 12px var(--sans); color: var(--ink-3); font-style: normal; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.post { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; }
+.post-head { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.post-head .mark { width: 36px; height: 36px; border-radius: 50%; font-size: 13px; }
+.post-head b { display: block; font-size: 14px; }
+.post-head small { color: var(--ink-3); font-size: 12.5px; }
+.post h3 { font: 600 18px/1.3 var(--serif); margin: 0 0 6px; }
+.post p { margin: 0 0 10px; color: var(--ink-2); }
+.takeaway { background: var(--surface-2); border-radius: 10px; padding: 8px 12px; font-size: 13.5px; margin-bottom: 10px; }
+.takeaway::before { content: "Takeaway · "; font-weight: 600; color: var(--accent); }
+.hashtags { display: flex; flex-wrap: wrap; gap: 10px; font: 500 12.5px var(--mono); color: var(--accent); }
+.post-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); margin-top: 12px; padding-top: 10px; font-size: 13px; color: var(--ink-3); }
+.post-foot button { border: 0; background: none; color: var(--ink-2); padding: 2px 6px; border-radius: 6px; }
+.post-foot button:hover { background: var(--surface-2); }
+.post.flash { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* Composer */
+.composer-wrap { padding: 10px 40px 14px; }
+.composer { max-width: 780px; margin: 0 auto; display: flex; gap: 8px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 6px 6px 6px 14px; box-shadow: var(--shadow); }
+.composer:focus-within { border-color: var(--accent); }
+.composer .spark { font-size: 16px; }
+.composer input { flex: 1; border: 0; outline: 0; background: none; color: var(--ink); font: 15px var(--sans); padding: 8px 0; min-width: 0; }
+.send { width: 38px; height: 38px; border: 0; border-radius: 11px; background: var(--accent); color: var(--accent-ink); font-size: 17px; }
+.foot { max-width: 780px; margin: 8px auto 0; display: flex; justify-content: space-between; color: var(--ink-3); font: 500 11px var(--mono); }
+.foot a { color: var(--ink-3); text-decoration: none; letter-spacing: .08em; text-transform: uppercase; }
+
+/* Right panel */
+.panel { border-left: 1px solid var(--line); padding: 24px 22px; overflow-y: auto; background: var(--surface); }
+.panel .eyebrow { color: var(--ink-3); }
+.panel .eyebrow::before { content: ""; }
+.panel-logo { font: 600 26px var(--serif); color: var(--warm); margin: 14px 0 6px; }
+.panel h2 { font: 400 28px/1.1 var(--serif); margin: 4px 0 4px; }
+.panel .tagline { color: var(--ink-2); font-size: 14px; margin: 0 0 8px; }
+.panel .sub { color: var(--ink-2); font-size: 13.5px; margin: 0 0 12px; }
+.panel .tags { margin-bottom: 18px; }
+.diagram { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); padding: 12px; }
+.diagram-h { display: flex; justify-content: space-between; font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; }
+.node { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 9px 12px; font-size: 12.5px; }
+.node::before { content: "◇"; color: var(--warm); }
+.node::after { content: "●"; margin-left: auto; color: var(--warm); font-size: 7px; }
+.node.hot { border-color: var(--accent); background: var(--accent-soft); }
+.down { text-align: center; color: var(--ink-3); font-size: 12px; line-height: 20px; }
+.diagram small { display: block; text-align: center; color: var(--ink-3); font-size: 10.5px; margin-top: 8px; }
+.panel-label { font: 500 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin: 20px 0 8px; }
+.panel p.contrib { color: var(--ink-2); font-size: 13.5px; margin: 0 0 14px; }
+.explore-btn { display: flex; justify-content: space-between; width: 100%; border: 1px solid var(--line); background: var(--surface-2); border-radius: 10px; padding: 11px 14px; text-decoration: none; color: var(--ink); font-size: 14px; }
+.explore-btn:hover { border-color: var(--accent); }
+.copy-link { display: block; margin: 8px auto 0; border: 0; background: none; color: var(--ink-3); font-size: 12.5px; }
+.proj-list a { display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 9px 2px; text-decoration: none; color: var(--ink-2); font-size: 14px; }
+.proj-list a:hover, .proj-list a.on { color: var(--accent); }
+.closing { display: flex; gap: 12px; align-items: center; margin-top: 26px; color: var(--ink-3); font: italic 13px/1.4 var(--serif); }
+.closing span { font-size: 26px; color: var(--warm); font-style: normal; }
+
+/* Lab */
+.lab-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 34px 0 10px; }
+.lab-h h2 { font: 400 24px var(--serif); margin: 0; }
+.lab-h small { color: var(--ink-3); font-size: 13px; }
+.hld .card h3 { font-size: 23px; }
+.scale { font: 500 11.5px var(--mono); color: var(--ink-3); margin-bottom: 8px; }
+.lld-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.lld { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.lld b { display: block; font-size: 14.5px; }
+.lld span { color: var(--ink-3); font-size: 12.5px; }
+.lld.own { border-color: var(--accent); }
+.lld.own b::after { content: "my code"; margin-left: 8px; font: 500 10px var(--mono); color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 6px; vertical-align: 1px; }
+.dsa-line { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.dsa-line b { font: 600 17px var(--serif); }
+.dsa-line .tags { flex: 1 1 100%; }
+.credits { color: var(--ink-3); font-size: 13.5px; margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--line); }
+.credits b { color: var(--ink-2); font-weight: 500; }
+.flow-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0; }
+.flow-row .node { flex: 1 1 140px; }
+.flow-row .arrow { color: var(--ink-3); }
+.decision { border-left: 2px solid var(--accent); padding: 2px 0 2px 14px; margin-bottom: 14px; }
+.decision b { display: block; color: var(--ink); }
+.decision p { margin: 2px 0 0; }
+.tradeoff { background: var(--surface-2); border-radius: 12px; padding: 14px 16px; color: var(--ink-2); }
+.tradeoff b { color: var(--ink); }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 16px; border-radius: 10px; font-size: 13.5px; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 20; }
+.toast.show { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (max-width: 1180px) { .app { grid-template-columns: 220px minmax(0, 1fr); } .panel { display: none; } }
+@media (max-width: 760px) {
+  .app { grid-template-columns: 1fr; }
+  .side { position: fixed; inset: 0 auto 0 0; width: 268px; z-index: 10; transform: translateX(-100%); transition: transform .2s; }
+  .side.open { transform: none; box-shadow: var(--shadow); }
+  .menu-btn { display: inline-block; }
+  .crumbs, .pill { display: none; }
+  .topbar { padding: 10px 16px; }
+  .scroll { padding: 20px 16px; }
+  .composer-wrap { padding: 8px 16px 12px; }
+  .hero-top { grid-template-columns: 1fr; }
+  .orb { display: none; }
+  .stats { grid-template-columns: 1fr; }
+  .stat + .stat { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; }
+  .starters, .grid { grid-template-columns: 1fr; }
+  .foot { flex-direction: column; align-items: center; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" id="side">
+    <a class="brand" href="#/"><div class="mark">y.</div><div><b>yogesh</b><small>engineer / lead</small></div></a>
+    <button class="new-chat" data-action="new">＋ New exploration <span>↗</span></button>
+    <div>
+      <div class="nav-label">The workspace</div>
+      <nav class="nav" id="nav">
+        <a href="#/" data-view="agent"><span class="ico">✳</span> Ask my agent <span class="badge">GUIDE</span></a>
+        <a href="#/work" data-view="work"><span class="ico">▦</span> Selected work <span class="badge" id="work-count"></span></a>
+        <a href="#/lab" data-view="lab"><span class="ico">⚗</span> The lab <span class="badge" id="lab-count"></span></a>
+        <a href="#/journey" data-view="journey"><span class="ico">⌁</span> The journey</a>
+        <a href="#/fit" data-view="fit"><span class="ico">◎</span> Job fit explorer</a>
+        <a href="#/notes" data-view="notes"><span class="ico">≋</span> Engineering notes</a>
+      </nav>
+    </div>
+    <div>
+      <div class="nav-label">Things I think about</div>
+      <ul class="topics">
+        <li>Event-driven systems</li>
+        <li>Latency budgets</li>
+        <li>Secure by design</li>
+        <li>Teams that ship</li>
+      </ul>
+    </div>
+    <div class="me">
+      <img class="photo" src="photo.jpg" alt="Yogesh Joshi" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'mark',textContent:'YJ'}))">
+      <div><b>Yogesh Joshi</b><small>Lead Java Developer · Pune, India</small></div>
+    </div>
+    <div class="side-links">
+      <a href="mailto:yogesh.joshi1024@gmail.com">Let's connect <span>↗</span></a>
+      <div class="row">
+        <a href="https://www.linkedin.com/in/yogeshjoshisoftwareengineer" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="Yogesh_Joshi_Resume_public.pdf" download>Résumé ↓</a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="icon-btn menu-btn" id="menu" aria-label="Open menu">☰</button>
+      <div class="crumbs">Portfolio &nbsp;/&nbsp; <b id="crumb">A conversation with my work</b></div>
+      <div class="spacer"></div>
+      <label for="style">Style</label>
+      <select id="style" aria-label="Visual style">
+        <option value="teal">Teal</option>
+        <option value="terracotta">Terracotta</option>
+        <option value="graphite">Graphite</option>
+      </select>
+      <button class="icon-btn" id="theme" aria-label="Toggle light and dark">◐</button>
+      <span class="pill">Local guide</span>
+    </div>
+    <div class="scroll" id="scroll">
+      <div class="inner">
+        <section id="view-agent">
+          <div id="hero">
+            <div class="hero-top">
+              <div>
+                <div class="eyebrow">A portfolio with a different interface</div>
+                <h1 class="view-title">Fast systems.<br><em>Calm production.</em></h1>
+                <p class="lede">I'm Yogesh. I lead Java teams that turn slow, fragile monoliths into event-driven services that scale and stay up.</p>
+                <p class="lede" style="font-size:14px;color:var(--ink-3)">Let's explore what we could build together.</p>
+              </div>
+              <div class="orb" aria-hidden="true">
+                <div class="ring"></div><div class="ring r2"></div>
+                <div class="core">✳</div>
+                <span class="float f1">Kafka</span><span class="float f2">Redis</span><span class="float f3">API</span>
+                <small>Ask questions · see systems</small>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat"><b>11+ years</b><span>Enterprise Java, end to end</span></div>
+              <div class="stat"><b>Kafka &amp; Cloud</b><span>From APIs to architecture</span></div>
+              <div class="stat"><b>Fintech scale</b><span>Banking. Payments. Security.</span></div>
+            </div>
+            <div class="agent-card">
+              <div class="agent-head"><span class="spark">✳</span> Yogesh's agent <small>Your exploration partner</small></div>
+              <h2>A résumé tells you what. Let's explore how.</h2>
+              <p>Ask about my work, follow a technical rabbit hole, or see how my experience connects to your next challenge. Where would you like to start?</p>
+              <div class="starters">
+                <button class="starter" data-ask="intro"><span class="ico">↗</span><span><b>The 60-second intro</b><small>The person behind the code</small></span></button>
+                <button class="starter" data-ask="work"><span class="ico">⌘</span><span><b>Explore my work</b><small>Real systems. Measured results.</small></span></button>
+                <button class="starter" data-go="#/fit"><span class="ico">◎</span><span><b>Find the right fit</b><small>Your role, my experience</small></span></button>
+                <button class="starter" data-ask="architecture"><span class="ico">⟷</span><span><b>Talk architecture</b><small>How I think about systems</small></span></button>
+              </div>
+              <div class="persona">Make it relevant. I'm a
+                <button class="chip on" data-persona="visitor">Curious visitor</button>
+                <button class="chip" data-persona="recruiter">Recruiter</button>
+                <button class="chip" data-persona="engineer">Engineer</button>
+              </div>
+            </div>
+          </div>
+          <div id="thread"></div>
+        </section>
+        <section id="view-other" hidden></section>
+      </div>
+    </div>
+    <div class="composer-wrap">
+      <form class="composer" id="composer">
+        <span class="spark">✳</span>
+        <input id="input" autocomplete="off" placeholder="Ask me anything about my work…" aria-label="Ask a question">
+        <button class="send" aria-label="Send question">↑</button>
+      </form>
+      <div class="foot"><span>Local portfolio guide · curated answers from my published experience</span><a href="#/colophon">Built with intention ↗</a></div>
+    </div>
+  </main>
+
+  <aside class="panel" id="panel"></aside>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const PROFILE = {
+  email: "yogesh.joshi1024@gmail.com",
+  linkedin: "https://www.linkedin.com/in/yogeshjoshisoftwareengineer"
+};
+
+const PROJECTS = {
+  qualys: {
+    name: "Qualys", short: "QL", domain: "Cybersecurity platform", current: true,
+    role: "Software Engineer Team Lead", period: "Mar 2026 – Present", place: "Pune, India",
+    tagline: "Security at scale, served fast.",
+    summary: "Breaking a legacy monolith into cloud-native microservices, with search and caching built for millions of asset records.",
+    stack: ["Java 17", "Spring Boot", "Kafka", "Redis", "Caffeine", "Elasticsearch", "React.js"],
+    contribution: "Lead the engineering team: redesign service boundaries, set coding and review standards, mentor engineers and own performance work end to end.",
+    overview: [
+      "Leading the move from a legacy monolith to distributed, cloud-native microservices with independent scaling and fault isolation, so a failure in one area no longer takes the platform down.",
+      "Service-to-service traffic moved from synchronous REST to Kafka-based asynchronous messaging, and read-heavy paths got a two-level cache and purpose-built search."
+    ],
+    scope: [
+      "Redesigned the monolith into microservices, cutting production outages from 4 a month to 1.",
+      "Replaced synchronous REST between services with Kafka messaging, lifting throughput 2.5×.",
+      "Added a two-level cache (Spring Caffeine in-process, Redis distributed) with per-data-type TTL and eviction: read APIs from ~450 ms to ~90 ms.",
+      "Moved asset documents to Elasticsearch with tuned queries: search from ~3 s to under 500 ms.",
+      "Built an inverted index with bitmap lookups across millions of records: filters from ~8 s to under 300 ms.",
+      "Built React.js pages and components for 4–5 customer-facing features on Spring Boot REST APIs."
+    ],
+    leadership: [
+      "Embedded security review in design and code review: late-stage findings from 8–10 to 2–3 per release.",
+      "Coding standards, architecture docs and structured mentoring: onboarding from 6–8 weeks to under 4."
+    ],
+    wins: [["4 → 1", "outages a month"], ["2.5×", "throughput"], ["450 → 90 ms", "read API latency"], ["8 s → 300 ms", "filtered search"]],
+    flow: ["React UI", "Spring Boot services", "Kafka event bus", "Redis + Elasticsearch"]
+  },
+  citi: {
+    name: "Citibank", short: "CB", domain: "Banking", client: "via LTIMindtree",
+    role: "Senior Software Specialist", period: "May 2025 – Mar 2026", place: "Pune, India",
+    tagline: "Banking services, hardened.",
+    summary: "Securing and speeding up banking microservices: OAuth2/JWT, Vault-managed secrets and a faster CI/CD path to production.",
+    stack: ["Spring Security", "OAuth2 / JWT", "HashiCorp Vault", "Docker", "Kubernetes", "Angular"],
+    contribution: "Owned security hardening and delivery speed for three banking microservices and their Angular front end.",
+    overview: [
+      "Worked for Citibank through LTIMindtree on microservices that had to pass the bank's VAPT and penetration-testing gates.",
+      "The focus was closing security findings, making releases predictable and speeding up the Angular front end."
+    ],
+    scope: [
+      "Secured 40+ REST endpoints across 3 microservices with Spring Security OAuth2/JWT, closing 5 access-control findings from the bank's pentest.",
+      "Moved 10 hard-coded DB credentials to HashiCorp Vault with per-service policies: secret audit findings from 6 to 0.",
+      "Re-architected CI/CD with Docker, Kubernetes and parallel tests: deployment turnaround from 9 days to 5.",
+      "Built 1:1 production-parity staging and code-review gates: critical bugs from 7 to 2–3 a quarter.",
+      "Angular OnPush change detection and lazy loading: page load from 5 s to under 2 s, plus a reusable component library saving 2–3 days per feature."
+    ],
+    leadership: [],
+    wins: [["9 → 5 days", "deploy turnaround"], ["40+", "endpoints secured"], ["6 → 0", "secret findings"], ["5 s → 2 s", "page load"]],
+    flow: ["Angular app", "OAuth2 / JWT gateway", "Spring microservices", "Vault + Kubernetes"]
+  },
+  fis: {
+    name: "FIS Global", short: "FIS", domain: "Fintech · GETPAID",
+    role: "Senior Software Specialist · Technical Lead", period: "Oct 2019 – May 2025", place: "Pune, India",
+    tagline: "Receivables, reconciled automatically.",
+    summary: "A serverless invoice pipeline on AWS, Kafka transaction integrity and a healthier, faster team.",
+    stack: ["Java", "AWS Lambda", "Amazon S3", "Kafka", "SQL Server", "Oracle"],
+    contribution: "Technical Lead on GETPAID: designed the invoice pipeline and Kafka reconciliation, and ran design reviews and mentoring for the team.",
+    overview: [
+      "Nearly six years on FIS's GETPAID receivables product, growing from engineer to Technical Lead.",
+      "Work spanned AWS serverless processing, transaction integrity on Kafka, database performance and the team itself."
+    ],
+    scope: [
+      "Event-driven serverless invoice pipeline on AWS Lambda and S3 that ingests and organises scanned invoices by date and vendor: processing from 6–8 hours to 2–3.",
+      "Idempotency keys and reconciliation checks on Kafka transaction messaging, removing about $25K a month of manual reconciliation.",
+      "Async processing, connection pooling and back-pressure in the data-access layer: transaction latency from 1.8 s to 650 ms.",
+      "Slow SQL optimised and logging and exception handling standardised: SLA compliance at 99.5%."
+    ],
+    leadership: [
+      "Mandatory design and code reviews plus root-cause analysis: CSAT from 74 to 90.",
+      "Structured mentorship and code-ownership rotation with HR: attrition from 24% to 10%.",
+      "Star Performer Award (2023) and Employee of the Month (2022)."
+    ],
+    wins: [["6–8 h → 2–3 h", "invoice processing"], ["$25K/mo", "manual work removed"], ["1.8 s → 650 ms", "transaction latency"], ["74 → 90", "CSAT"]],
+    flow: ["Scanned invoice → S3", "Lambda trigger", "Sort by date & vendor", "Kafka → ledger"]
+  },
+  tcs: {
+    name: "TCS", short: "TCS", domain: "Banking payments",
+    role: "Senior Software Engineer", period: "Dec 2014 – Jun 2019", place: "Mumbai, India",
+    tagline: "Payments that settle on time.",
+    summary: "Automating NEFT, IMPS, merchant and settlement workflows, and standardising bank APIs.",
+    stack: ["Java", "Quartz Scheduler", "AKANA API platform", "Oracle"],
+    contribution: "Built the scheduled payment workflows and the API standards partners integrated against.",
+    overview: [
+      "Four and a half years on banking payment systems, where on-time settlement and clean integrations are the whole job."
+    ],
+    scope: [
+      "Automated NEFT, IMPS, merchant and settlement workflows with Quartz Scheduler: on-time settlement from 75% to 96%.",
+      "Standardised API design, authentication and documentation on AKANA: client integration tickets from ~12 to 4 a month."
+    ],
+    leadership: [],
+    wins: [["75% → 96%", "on-time settlement"], ["12 → 4", "integration tickets/mo"]],
+    flow: ["Bank channels", "NEFT / IMPS jobs", "Quartz scheduler", "Settlement + AKANA APIs"]
+  }
+};
+
+const NOTES = [
+  { id: "two-level-cache", title: "Put the cache next to the read", tags: ["Caching", "Performance", "SpringBoot"],
+    body: "One cache layer is rarely enough for read-heavy APIs. Caffeine in-process answers the hottest keys in microseconds; Redis behind it stops a cold pod from stampeding the database. Tune TTL and eviction per data type — reference data and user state do not age at the same speed.",
+    takeaway: "Two levels, per-type TTLs: ~450 ms → ~90 ms on our read paths." },
+  { id: "idempotent-kafka", title: "Exactly-once is a design choice, not a broker setting", tags: ["Kafka", "Fintech", "DistributedSystems"],
+    body: "Redelivery will happen. For money movement, every message carries an idempotency key and the consumer records what it has applied. Pair it with a reconciliation check that flags drift instead of asking people to find it.",
+    takeaway: "Idempotency keys + automated reconciliation replaced ~$25K/month of manual checks." },
+  { id: "bitmap-index", title: "Filters should be bitwise, not scans", tags: ["Search", "DataStructures", "Performance"],
+    body: "When users stack filters across millions of records, an inverted index with a bitmap per value turns each filter into an AND/OR over bit sets. Elasticsearch handles free-text; the bitmaps handle the facets.",
+    takeaway: "Facet filtering went from ~8 s to under 300 ms." },
+  { id: "async-between-services", title: "Synchronous chains fail together", tags: ["Microservices", "Kafka", "Reliability"],
+    body: "A call chain of five REST services has the availability of its weakest link and the latency of all five. Moving service-to-service work onto Kafka lets each service scale and fail on its own.",
+    takeaway: "Async messaging gave 2.5× throughput and fewer cascading outages." },
+  { id: "secrets-vault", title: "Secrets don't belong in config files", tags: ["Security", "Vault", "DevSecOps"],
+    body: "Hard-coded credentials survive every refactor until an audit finds them. Moving them to HashiCorp Vault with a policy per service means each service can read only what it needs, and rotation stops being a release.",
+    takeaway: "Hard-coded-secret audit findings went from 6 to 0." },
+  { id: "security-shift-left", title: "Security review belongs in the design meeting", tags: ["Security", "EngineeringLeadership"],
+    body: "Findings raised a week before release are expensive. Bringing security questions into architecture discussions and code review moves them to the point where a fix is a whiteboard change.",
+    takeaway: "Late-stage security findings dropped from 8–10 to 2–3 per release." },
+  { id: "onboarding", title: "Onboarding is an architecture problem", tags: ["Mentoring", "EngineeringLeadership"],
+    body: "If a new engineer needs two months to ship, the system is under-documented. Coding standards, short architecture docs and a named mentor turn tribal knowledge into something you can read.",
+    takeaway: "Onboarding went from 6–8 weeks to under 4." }
+];
+
+const HLD = {
+  payment: {
+    name: "Payment system", like: "Stripe-style", scale: "10K writes/s · money must never be lost or double-charged",
+    summary: "Card data that never touches the merchant, signed requests, and reconciliation driven by events instead of guesses.",
+    tags: ["Kafka", "CDC", "Postgres", "HSM"],
+    flow: [["Merchant page + SDK iframe", "Payment API (signed)"], ["Transactions DB · sharded by merchant"], ["CDC → Kafka"], ["Reconciliation service", "Card networks"]],
+    decisions: [
+      ["Card data skips the merchant entirely", "The SDK renders our iframe on the merchant page and encrypts the card with our public key in the browser. Only our servers, with the private key in an HSM, can read it."],
+      ["Every request is signed, not just keyed", "HMAC signature plus a nonce and timestamp. A nonce cache rejects replays, so a leaked request can't be resent."],
+      ["Write the intent before calling the network", "An attempt row goes in first and CDC turns it into an event. Success, failure and timeout each update that row, so there is always an audit trail."]
+    ],
+    tradeoff: ["A cron job polling 'pending' payments every 5 minutes", "Simple, but slow and it guesses. I'd rather send timeouts to a reconciliation service that asks the network directly and checks settlement files."],
+    link: ["fis", "This is the same idea I used at FIS: idempotency keys and reconciliation checks on Kafka removed ~$25K/month of manual work."]
+  },
+  ratelimiter: {
+    name: "Distributed rate limiter", like: "API gateway", scale: "1M requests/s · 100M daily users",
+    summary: "Token buckets in Redis, updated atomically, sharded so each client always lands on the same node.",
+    tags: ["Redis Cluster", "Lua", "Token bucket", "API gateway"],
+    flow: [["Client"], ["API gateway · limiter"], ["Redis Cluster · token buckets", "ZooKeeper · rules"], ["Backend services"]],
+    decisions: [
+      ["Token bucket over fixed windows", "Fixed windows let 2× the limit through at the boundary. A token bucket allows short bursts and a steady rate, with just two fields per client."],
+      ["One Lua script, not MULTI/EXEC", "With MULTI/EXEC the read still happens outside the transaction, so two gateways can spend the same token. A Lua script reads, refills and decrements in one atomic step."],
+      ["Shard by who is calling", "Hash the user ID, IP or API key so a client's bucket lives on one shard. Redis Cluster's hash slots do the routing: ~10 shards × 100K ops/s."]
+    ],
+    tradeoff: ["Fail open or fail closed when Redis is down", "Fail open keeps the API up but unprotected; fail closed protects it but takes it down. Replicas with automatic failover make the choice rarer, and every 429 carries Retry-After and rate-limit headers."],
+    link: ["qualys", "Same instincts as my Redis caching work at Qualys: keep the hot path in memory, make updates atomic, and tune expiry per key type."]
+  },
+  ticketing: {
+    name: "Ticket booking", like: "Ticketmaster / BookMyShow", scale: "Tens of millions viewing during a big on-sale",
+    summary: "Seat holds that expire on their own, consistent bookings, and a waiting room for the biggest events.",
+    tags: ["Redis lock", "Postgres", "Elasticsearch", "WebSocket"],
+    flow: [["Virtual waiting queue (hot events)"], ["Booking service · reserve → confirm"], ["Redis seat lock · 10-min TTL", "Postgres · tickets & seats"], ["CDC → Elasticsearch search"]],
+    decisions: [
+      ["Hold seats with a TTL lock, not a status column", "My first design stored 'reserved' plus a timestamp and a cron job to release seats, which misses edge cases. A Redis lock with a 10-minute TTL frees the seat by itself."],
+      ["Postgres for the booking itself", "Two users must never get one seat, so the ticket and ticket-seat tables live in a strongly consistent database."],
+      ["Admit people in batches for huge events", "A virtual queue over WebSocket lets ~100 users at a time into the seat map, so the booking path never melts."]
+    ],
+    tradeoff: ["Long polling vs SSE vs WebSockets for live seat updates", "Fine for normal events, but none of them saves a Taylor Swift on-sale. Controlling how many people enter beats pushing updates to everyone."],
+    link: null
+  },
+  auction: {
+    name: "Online auction", like: "eBay-style bidding", scale: "10M concurrent auctions",
+    summary: "Correct highest bid under contention, no lost bids during the final-minute rush, and live updates to every watcher.",
+    tags: ["Kafka", "OCC", "SSE", "Redis Pub/Sub"],
+    flow: [["Bidder"], ["API gateway → Kafka (ordered per auction)"], ["Bid service · OCC on auction row"], ["Redis Pub/Sub → SSE servers → watchers"]],
+    decisions: [
+      ["Lock one row, briefly, or not at all", "SELECT … FOR UPDATE on every bid serialises the auction. Keeping the max bid on the auction row means one short lock, or optimistic concurrency with a version check."],
+      ["Kafka before the database", "Bids land in Kafka first: durable, ordered (so a tie goes to the first bidder) and buffered for the final-minute spike."],
+      ["SSE for updates, Pub/Sub to fan out", "Updates only flow one way, so SSE is lighter than WebSockets. Pub/Sub tells every server about a new bid so all watchers see it."]
+    ],
+    tradeoff: ["Distributed lock vs optimistic concurrency", "A distributed lock is right when you hold it for minutes, like a ticket seat. A bid holds for milliseconds, so OCC or a single-row lock is simpler and faster."],
+    link: null
+  },
+  rides: {
+    name: "Ride hailing", like: "Uber-style matching", scale: "~600K driver location updates/s",
+    summary: "Fast nearby-driver search, one ride offer per driver at a time, and matching that survives a stadium emptying.",
+    tags: ["Redis GEO", "Distributed lock", "Queues", "Postgres"],
+    flow: [["Driver app · adaptive updates", "Rider app"], ["Location service → Redis GEO", "Ride service · fares"], ["Matching service ← regional queue"], ["Driver lock (TTL) → push offer"]],
+    decisions: [
+      ["Redis geohash for locations", "A quadtree in Postgres can't absorb 600K writes a second. Redis GEO handles the writes and answers 'drivers near me' in memory."],
+      ["Send fewer updates from the app", "The driver app skips updates when offline or parked, which cuts write volume before it reaches the server."],
+      ["One offer per driver at a time", "A short TTL lock on the driver stops several matching instances from offering the same driver ten rides at once."]
+    ],
+    tradeoff: ["Scaling matchers vs queueing requests", "After an IPL match everyone requests at once. A queue partitioned by region absorbs the burst and stops one area starving the others."],
+    link: null
+  }
+};
+
+const LLD = [
+  ["Parking lot", "Strategy · Factory"], ["Elevator system", "State · Strategy"], ["Splitwise", "Strategy for split types"],
+  ["Vending machine", "State"], ["BookMyShow", "Seat concurrency"], ["ATM", "State · Chain of Responsibility"],
+  ["Car rental", "Entity modelling"], ["Snake & Ladder", "Game loop design"], ["Tic-Tac-Toe", "Clean OOP"],
+  ["Cricbuzz", "Observer"], ["Payment gateway", "Strategy · Retry"], ["Meeting scheduler", "Interval logic"]
+];
+const OWN_CODE = [["LRU & LFU cache", "LinkedHashMap and doubly linked list, O(1) get/put"], ["Concurrency playground", "Producer–consumer with BlockingQueue, CountDownLatch, CyclicBarrier, deadlock & livelock demos"]];
+const PATTERNS = ["SOLID", "Strategy", "Observer", "Decorator", "Factory", "Abstract Factory", "Builder", "Singleton", "Object Pool", "Adapter",
+  "Bridge", "Composite", "Facade", "Flyweight", "Proxy", "State", "Chain of Responsibility", "Command", "Iterator", "Mediator",
+  "Memento", "Template Method", "Visitor", "Null Object"];
+const STUDIED = [
+  ["Distributed systems", ["CAP theorem", "Consistent hashing", "Caching strategies", "Distributed transactions", "Dual-write problem", "2PL & concurrency control", "Thundering herd", "Back-of-envelope estimation", "SQL vs NoSQL"]],
+  ["Microservice patterns", ["API gateway", "Service discovery", "Client-side load balancing", "RestClient & Feign", "Circuit breaker", "Retry", "Bulkhead", "Centralised config with refresh scope & Cloud Bus", "Distributed tracing & logging", "Leader–follower scheduler"]],
+  ["Event-driven & Kafka", ["Kafka architecture", "Producer idempotency", "Producer & consumer transactions", "Consumer setup & tuning"]],
+  ["Spring Boot in depth", ["@Transactional internals", "AOP", "@Async", "Interceptors vs filters", "HATEOAS", "JPA first/second-level cache", "Spring Security: JWT, OAuth2, method security", "Actuator", "Spring AI"]],
+  ["Platform & security", ["Redis", "AWS", "Symmetric & asymmetric encryption", "OAuth 2.0 flows", "Common web attacks", "DNS, proxies & service mesh"]],
+  ["Modern Java", ["Locks & conditions", "Lock-free concurrency", "Thread pools & Fork-Join", "CompletableFuture", "Virtual threads", "Records, sealed classes, pattern matching", "NIO"]],
+  ["Testing", ["JUnit 5: parameterised, dynamic & tagged tests", "Mockito: stubbing, verification, @InjectMocks"]]
+];
+const DSA = {
+  // Counts come from the Java solutions in E:\dsa-java-solutions. Set `repo` to its GitHub URL once pushed.
+  solved: "150+", profile: "", repo: "https://github.com/yg7276197271/dsa-java-solutions",
+  topics: ["Arrays & two pointers", "Sliding window", "Hashing", "Strings", "Stacks", "Trees", "Heaps / Top-K", "Dynamic programming"],
+  breakdown: [
+    ["Dynamic programming", "~27 problems, each as recursion → memoization → tabulation: knapsack, LCS, LIS, edit distance, DP on grids and subsets"],
+    ["Trees", "25 solutions: iterative and Morris traversals, BST operations, LCA, diameter, max path sum, building a tree from traversals, serialise/deserialise"],
+    ["Graphs", "BFS/DFS, topological sort, cycle detection, bipartite check, strongly connected components, islands"],
+    ["Greedy & intervals", "Job sequencing, minimum platforms, N meetings, merge and insert intervals, jump game"],
+    ["Linked lists, stacks & queues", "19 solutions, including stack and queue implementations"],
+    ["Arrays, strings & sorting", "~65 problems, plus bubble, insertion, merge, quick and selection sort written from scratch"]
+  ]
+};
+
+const SKILL_EVIDENCE = {
+  "java": ["qualys", "fis", "tcs"], "spring": ["qualys", "citi"], "spring boot": ["qualys", "citi"], "microservices": ["qualys", "citi"],
+  "kafka": ["qualys", "fis"], "redis": ["qualys"], "caching": ["qualys"], "elasticsearch": ["qualys"], "react": ["qualys"],
+  "angular": ["citi"], "docker": ["citi"], "kubernetes": ["citi"], "ci/cd": ["citi"], "aws": ["fis"], "lambda": ["fis"],
+  "s3": ["fis"], "serverless": ["fis"], "oauth2": ["citi"], "jwt": ["citi"], "spring security": ["citi"], "security": ["qualys", "citi"],
+  "vault": ["citi"], "sql": ["fis"], "sql server": ["fis"], "oracle": ["fis", "tcs"], "rest": ["qualys", "citi", "tcs"],
+  "event-driven": ["qualys", "fis"], "distributed systems": ["qualys"], "fintech": ["fis"], "banking": ["citi", "tcs"],
+  "payments": ["tcs", "fis"], "team lead": ["qualys", "fis"], "leadership": ["qualys", "fis"], "mentoring": ["qualys", "fis"],
+  "full stack": ["qualys", "citi"], "hibernate": [], "jpa": [], "elk": [], "ec2": [], "azure": [], "agile": [], "safe": [],
+  "system design": ["lab:payment", "lab:ratelimiter", "lab:ticketing"], "low level design": ["lab"], "lld": ["lab"], "design patterns": ["lab"],
+  "data structures": ["lab"], "algorithms": ["lab"], "websocket": ["lab:ticketing"], "websockets": ["lab:ticketing"],
+  "junit": ["lab"], "mockito": ["lab"], "circuit breaker": ["lab"], "resilience4j": ["lab"], "multithreading": ["lab"], "concurrency": ["lab"]
+};
+const OTHER_TECH = ["graphql", "terraform", "golang", "python", "kotlin", "node.js", "mongodb", "postgresql", "gcp", "rabbitmq",
+  "cassandra", "scala", "rust", "c#", ".net", "vue", "snowflake", "spark", "airflow", "kubernetes operators", "istio", "datadog", "splunk"];
+const SKILL_LABEL = { "ci/cd": "CI/CD", "aws": "AWS", "s3": "S3", "jwt": "JWT", "sql": "SQL", "rest": "REST APIs", "elk": "ELK", "ec2": "EC2", "safe": "SAFe", "jpa": "JPA", "oauth2": "OAuth2",
+  "graphql": "GraphQL", "gcp": "GCP", "mongodb": "MongoDB", "postgresql": "PostgreSQL", "node.js": "Node.js", "c#": "C#", ".net": ".NET", "rabbitmq": "RabbitMQ",
+  "junit": "JUnit", "websocket": "WebSocket", "websockets": "WebSockets", "lld": "LLD", "resilience4j": "Resilience4j" };
+
+let persona = "visitor";
+let spotlight = "qualys";
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const labelOf = s => SKILL_LABEL[s] || s.replace(/\b\w/g, c => c.toUpperCase());
+const follow = (...items) => `<div class="follow">${items.map(([label, target]) =>
+  target.startsWith("#") ? `<a href="${target}">${label} ↗</a>` : `<button data-ask="${target}">${label} ↗</button>`).join("")}</div>`;
+const src = text => `<span class="source">◈ ${text}</span>`;
+const toast = text => { const t = $("toast"); t.textContent = text; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 1800); };
+const copy = (text, msg) => navigator.clipboard?.writeText(text).then(() => toast(msg), () => toast(text));
+
+/* ---------- Agent answers ---------- */
+const ANSWERS = {
+  intro: () => {
+    const opener = {
+      visitor: "Yogesh is a Lead Java Developer with 11+ years building the backend systems behind banking, payments and security products.",
+      recruiter: "Yogesh is a Lead Java Developer (11+ years) currently leading a team at Qualys, with prior roles at Citibank via LTIMindtree, FIS Global and TCS. He is open to Lead and Senior Java roles, including relocation within Europe.",
+      engineer: "Yogesh is a Java 17 / Spring Boot engineer who spends most of his time on distributed-system problems: Kafka messaging, cache layering, search latency and safe deployments."
+    }[persona];
+    return `<p>${opener}</p>
+      <p>At <b>Qualys</b> he cut production outages from <span class="metric">4 a month to 1</span> by splitting a legacy monolith into cloud-native microservices. Before that he hardened Citibank services, built a serverless invoice pipeline at FIS and automated payment settlement at TCS.</p>
+      <p>Choose a project to see what he built and how he contributed.</p>
+      ${src("Published résumé")}
+      ${follow(["Explore Qualys", "qualys"], ["Compare a role", "#/fit"], ["Career journey", "#/journey"])}`;
+  },
+  work: () => `<p>Four chapters, each with measured results:</p>
+    <ul>${Object.entries(PROJECTS).map(([, p]) => `<li><b>${p.name}</b> — ${p.summary}</li>`).join("")}</ul>
+    ${follow(...Object.entries(PROJECTS).map(([k, p]) => [p.name, k]), ["See all as cards", "#/work"])}`,
+  journey: () => `<p>From payments engineer to team lead: TCS (2014) → FIS Global (2019) → Citibank via LTIMindtree (2025) → Qualys (2026).</p>
+    ${follow(["Open the full journey", "#/journey"], ["Certifications", "certs"])}`,
+  architecture: () => `<p>Three patterns that come up in almost every system Yogesh has worked on:</p>
+    <ul>
+      <li><b>Async by default between services.</b> Swapping synchronous REST for Kafka at Qualys lifted throughput <span class="metric">2.5×</span> and stopped one slow service from taking down the rest.</li>
+      <li><b>Exactly-once in practice, via idempotency.</b> At FIS, idempotency keys and reconciliation checks on Kafka transactions removed about <span class="metric">$25K a month</span> of manual reconciliation.</li>
+      <li><b>Put the cache next to the read.</b> Caffeine in-process for hot data and Redis as the shared layer took read APIs from <span class="metric">450 ms to 90 ms</span>.</li>
+    </ul>
+    ${follow(["Caching in depth", "caching"], ["Kafka in depth", "kafka"], ["Search in depth", "search"], ["System designs in the lab", "lab"])}`,
+  caching: () => `<h3>Two-level caching</h3><div class="meta">Qualys · read-heavy endpoints</div>
+    <ul>
+      <li><b>L1, Caffeine:</b> in-process, microsecond reads for the hottest keys, with a short TTL to bound staleness per pod.</li>
+      <li><b>L2, Redis:</b> shared across instances so a cold pod doesn't hammer the database.</li>
+      <li>TTL and eviction chosen per data type rather than one global setting.</li>
+    </ul>
+    <p>Result: about <span class="metric">450 ms → 90 ms</span>.</p>
+    ${follow(["Kafka in depth", "kafka"], ["Read the note", "#/notes/two-level-cache"])}`,
+  kafka: () => `<h3>Kafka-driven design</h3><div class="meta">Qualys · FIS Global</div>
+    <ul>
+      <li>Replaced synchronous service-to-service REST with events at Qualys: <span class="metric">2.5×</span> throughput and better fault isolation.</li>
+      <li>At FIS, transaction messages carry idempotency keys so a redelivered message can't double-post, and reconciliation checks catch drift automatically.</li>
+    </ul>
+    ${follow(["Caching in depth", "caching"], ["Read the note", "#/notes/idempotent-kafka"])}`,
+  search: () => `<h3>Search under 300 ms</h3><div class="meta">Qualys · millions of asset records</div>
+    <ul>
+      <li>Asset documents in Elasticsearch with tuned queries: about <span class="metric">3 s → under 500 ms</span>.</li>
+      <li>An inverted index with bitmap lookups turns filters into bitwise AND/OR instead of full scans: about <span class="metric">8 s → under 300 ms</span>.</li>
+    </ul>
+    ${follow(["Explore Qualys", "#/work/qualys"], ["Read the note", "#/notes/bitmap-index"])}`,
+  certs: () => `<ul><li>OCPJP — Java 17</li><li>Certified Kubernetes Application Developer (CKAD)</li><li>AWS Certified Developer – Associate</li><li>Microsoft AZ-900</li><li>SAFe certification</li></ul>
+    ${follow(["Awards", "awards"], ["Skills", "skills"])}`,
+  awards: () => `<ul><li><b>Star Performer Award</b> — FIS, 2023, for delivery excellence and technical contribution.</li><li><b>Employee of the Month</b> — FIS, 2022, for ownership and consistent delivery.</li></ul>
+    <p>On LinkedIn, colleagues highlight his ownership, quality focus and record of delivering GETPAID projects that improved user experience.</p>
+    ${follow(["Certifications", "certs"], ["Get in touch", "contact"])}`,
+  skills: () => `<ul>
+      <li><b>Backend:</b> Java 17, Spring Boot, Spring MVC/AOP/Security, Hibernate & JPA</li>
+      <li><b>Messaging & data:</b> Apache Kafka, Redis, Caffeine, Elasticsearch, ELK, SQL Server, Oracle</li>
+      <li><b>Cloud & delivery:</b> AWS (Lambda, EC2, S3), Docker, Kubernetes, CI/CD, HashiCorp Vault</li>
+      <li><b>Frontend:</b> React.js, Angular</li>
+      <li><b>Languages:</b> English (fluent), German (learning, A1)</li>
+    </ul>${follow(["Check a role against these", "#/fit"], ["Certifications", "certs"])}`,
+  leadership: () => `<p>Yogesh leads by raising the floor for the whole team:</p>
+    <ul>
+      <li>Onboarding from <span class="metric">6–8 weeks to under 4</span> with coding standards, architecture docs and structured mentoring (Qualys).</li>
+      <li>Attrition from <span class="metric">24% to 10%</span> through mentorship and code-ownership rotation (FIS).</li>
+      <li>CSAT from <span class="metric">74 to 90</span> with mandatory design and code reviews (FIS).</li>
+      <li>Security findings per release from <span class="metric">8–10 to 2–3</span> by reviewing security at design time (Qualys).</li>
+    </ul>${follow(["Explore my work", "#/work"], ["Get in touch", "contact"])}`,
+  contact: () => `<ul>
+      <li>Email: <a href="mailto:${PROFILE.email}">${PROFILE.email}</a></li>
+      <li>LinkedIn: <a href="${PROFILE.linkedin}" target="_blank" rel="noopener">linkedin.com/in/yogeshjoshisoftwareengineer</a></li>
+      <li>Based in Pune, India · open to relocation within the EU</li>
+    </ul>${follow(["Download résumé", "#/resume"])}`,
+  fallback: () => `<p>I don't have a curated answer for that yet. Here's what I can tell you about:</p>
+    ${follow(["60-second intro", "intro"], ["Selected work", "work"], ["Architecture", "architecture"], ["Leadership", "leadership"], ["Skills", "skills"], ["Contact", "contact"])}`
+};
+ANSWERS.lab = () => `<p>Outside the day job I practise design end to end. My lab has:</p>
+    <ul>
+      <li><b>${Object.keys(HLD).length} system designs</b>: ${Object.values(HLD).map(d => d.name).join(", ")}, each with the trade-offs I weighed.</li>
+      <li><b>${LLD.length} low-level designs</b> covering ${PATTERNS.length} design patterns, plus my own LRU/LFU cache and concurrency code.</li>
+      <li><b>DSA</b>: ${DSA.solved} problems coded in Java, from DP and graphs to greedy and trees.</li>
+    </ul>
+    ${follow(...Object.entries(HLD).slice(0, 3).map(([k, d]) => [d.name, `#/lab/${k}`]), ["Open the lab", "#/lab"])}`;
+ANSWERS.dsa = () => `<p>I've coded <span class="metric">${DSA.solved} problems</span> in Java, following Striver's sheets pattern by pattern:</p>
+    <ul>${DSA.breakdown.map(([t, d]) => `<li><b>${t}:</b> ${d}</li>`).join("")}</ul>
+    <p>For DP I write each problem three ways, recursion, then memoization, then tabulation, so I can explain where the speed-up comes from.</p>
+    ${DSA.repo ? `<div class="follow"><a href="${DSA.repo}" target="_blank" rel="noopener">View the code on GitHub ↗</a></div>` : ""}
+    ${follow(["Open the lab", "#/lab"], ["System designs", "lab"])}`;
+Object.entries(HLD).forEach(([key, d]) => {
+  ANSWERS[`hld-${key}`] = () => `<h3>${d.name}</h3><div class="meta">System design · ${d.scale}</div>
+    <p>${d.summary}</p>
+    <ul>${d.decisions.map(([t]) => `<li>${t}</li>`).join("")}</ul>
+    <p><b>Trade-off:</b> ${d.tradeoff[0].toLowerCase()}. ${d.tradeoff[1]}</p>
+    ${follow(["Full design", `#/lab/${key}`], ["Another design", "lab"])}`;
+});
+Object.entries(PROJECTS).forEach(([key, p]) => {
+  ANSWERS[key] =() => `<h3>${p.name} — ${p.role}</h3><div class="meta">${p.client ? p.client + " · " : ""}${p.period}</div>
+    <p>${p.summary}</p><p>${p.contribution}</p>
+    <ul>${p.wins.map(([n, t]) => `<li><span class="metric">${n}</span> ${t}</li>`).join("")}</ul>
+    <p>The project panel shows its stack and a simplified system view.</p>
+    ${src("Portfolio · Work & résumé")}
+    ${follow([`Explore ${p.name}`, `#/work/${key}`], ["Compare a role", "#/fit"], ["Career journey", "#/journey"])}`;
+});
+
+const INTENTS = [
+  ["contact", /contact|email|reach|hire|linkedin|phone|available|relocat/],
+  ["qualys", /qualys/], ["citi", /citi|ltim|mindtree/], ["fis", /\bfis\b|getpaid/], ["tcs", /\btcs\b|tata consultancy/],
+  ["hld-ratelimiter", /rate.?limit|throttl|token bucket/],
+  ["hld-ticketing", /ticket|bookmyshow|book my show|seat/],
+  ["hld-auction", /auction|\bbid/],
+  ["hld-rides", /uber|\bride\b|\brides\b|ride.?hail|driver|geospatial/],
+  ["hld-payment", /stripe|design (a |your )?payment|payment (system|gateway) design/],
+  ["dsa", /dsa|leetcode|striver|algorithm|data structure|problem solving/],
+  ["lab", /system design|\bhld\b|\blld\b|low.level|design pattern|learning|studying|hello interview|\blab\b|side project/],
+  ["caching", /cache|caching|caffeine|redis|latency/],
+  ["kafka", /kafka|event|async|idempoten|messag/],
+  ["search", /search|elastic|index|bitmap/],
+  ["certs", /certif|ckad|ocpjp|az-900/],
+  ["awards", /award|recogni|recommend|achiev/],
+  ["leadership", /lead|manage|mentor|team|attrition|onboard/],
+  ["skills", /skill|stack|tech|language|german|react|angular|spring/],
+  ["journey", /journey|career|education|degree|history|timeline/],
+  ["architecture", /architect|design|system|scale|microservice/],
+  ["qualys", /qualys/], ["citi", /citi|ltim|mindtree|vault|oauth|security/],
+  ["fis", /\bfis\b|getpaid|lambda|invoice|serverless/], ["tcs", /\btcs\b|tata|neft|imps|settlement|payment/],
+  ["work", /work|project|experience|built/], ["intro", /intro|who|about|yourself|summary/]
+];
+const LABELS = { intro: "Give me a 60-second introduction.", work: "Show me your selected work.", journey: "Walk me through the career journey.",
+  architecture: "How do you think about architecture?", caching: "Tell me about the caching work.", kafka: "How do you use Kafka?",
+  search: "How did you make search fast?", certs: "What certifications do you hold?", awards: "Any awards or recommendations?",
+  skills: "What is your tech stack?", leadership: "How do you lead teams?", contact: "How can I get in touch?",
+  lab: "What do you practise outside work?", dsa: "How do you practise DSA?" };
+Object.entries(HLD).forEach(([key, d]) => { LABELS[`hld-${key}`] = `How would you design a ${d.name.toLowerCase()}?`; });
+
+const addMessage = (who, html) => {
+  const el = document.createElement("div");
+  el.className = `msg ${who}`;
+  el.innerHTML = `<div class="avatar">${who === "bot" ? "✳" : "↗"}</div><div class="bubble"><div class="who">${who === "bot" ? "Yogesh's agent" : "You"}</div>${html}</div>`;
+  $("thread").appendChild(el);
+  $("scroll").scrollTo({ top: $("scroll").scrollHeight, behavior: "smooth" });
+  return el;
+};
+const respond = (key, question) => {
+  if (location.hash && location.hash !== "#/") location.hash = "#/";
+  $("hero").hidden = true;
+  addMessage("you", `<p>${esc(question)}</p>`);
+  const pending = addMessage("bot", `<div class="typing"><span></span><span></span><span></span></div>`);
+  setTimeout(() => {
+    pending.querySelector(".bubble").innerHTML = `<div class="who">Yogesh's agent</div>${(ANSWERS[key] || ANSWERS.fallback)()}`;
+    if (PROJECTS[key]) setSpotlight(key);
+    $("scroll").scrollTo({ top: $("scroll").scrollHeight, behavior: "smooth" });
+  }, 450);
+};
+const detectIntent = text => (INTENTS.find(([, re]) => re.test(text.toLowerCase())) || ["fallback"])[0];
+
+/* ---------- Views ---------- */
+const VIEWS = {
+  work: () => `<div class="eyebrow">Selected work / real-world systems</div>
+    <h1 class="view-title">Behind the experience.</h1>
+    <p class="lede">Different domains. One constant: making complex systems fast, secure and calm in production.</p>
+    <div class="grid">${Object.entries(PROJECTS).map(([k, p], i) => `
+      <a class="card" href="#/work/${k}">
+        <div class="num"><span>${String(i + 1).padStart(2, "0")}</span><span>↗</span></div>
+        <div class="domain">${p.domain}</div><h3>${p.name}</h3><p>${p.summary}</p>
+        <div class="tags">${p.stack.slice(0, 3).map(s => `<span>${s}</span>`).join("")}</div>
+      </a>`).join("")}</div>
+    <a class="more-link" href="#/journey">Read the full career journey ↗</a>`,
+
+  journey: () => `<div class="eyebrow">The journey / 2014 — present</div>
+    <h1 class="view-title">Built one system<br>at a time.</h1>
+    <p class="lede">From bank payment rails to security platforms, with a team lead's view of how systems and people scale.</p>
+    <div class="tl">${Object.entries(PROJECTS).map(([k, p]) => `
+      <div class="tl-item ${p.current ? "now" : ""}">
+        <div class="tl-date">${p.period}</div>
+        <h3>${p.name}${p.client ? ` <span style="font:400 14px var(--sans);color:var(--ink-3)">${p.client}</span>` : ""}</h3>
+        <div class="tl-role">${p.role} · ${p.domain} · ${p.place}</div>
+        <p>${p.summary}</p>
+        <a href="#/work/${k}">Project detail ↗</a>
+      </div>`).join("")}
+      <div class="tl-item"><div class="tl-date">Jun 2010 – Jun 2014</div><h3>BE, Computer Engineering</h3><div class="tl-role">PIIT, Navi Mumbai</div></div>
+    </div>
+    <h2 class="section-h" id="education">Education & background</h2>
+    <div class="edu">
+      <div><b>BE Computer Engineering</b>PIIT, Navi Mumbai · 2014</div>
+      <div><b>Certifications</b>OCPJP 17 · CKAD · AWS Developer Associate · AZ-900 · SAFe</div>
+      <div><b>Recognition</b>Star Performer, FIS 2023 · Employee of the Month, FIS 2022</div>
+      <div><b>Languages</b>English (fluent) · German (A1, learning)</div>
+    </div>`,
+
+  fit: () => `<div class="eyebrow">Job fit explorer / find the connection</div>
+    <h1 class="view-title">Your next challenge.<br><em>My experience.</em></h1>
+    <p class="lede">Paste a role and see where my published experience lines up, with evidence from real projects.</p>
+    <div class="fit-form">
+      <label for="jd">Job description <small>Compared in your browser. Nothing is sent anywhere.</small></label>
+      <textarea class="jd" id="jd" placeholder="Paste the role, responsibilities and technical requirements…"></textarea>
+      <div class="fit-row"><small id="jd-hint">Add at least 30 characters. This is a keyword comparison, not a hiring recommendation.</small>
+        <button class="primary" id="fit-go" data-action="match" disabled>Explore the fit ↗</button></div>
+    </div>
+    <div class="fit-result" id="fit-result"></div>`,
+
+  notes: () => `<div class="eyebrow">Engineering notes / field lessons</div>
+    <h1 class="view-title">Notes from production.</h1>
+    <p class="lede">Short lessons from systems I've built, each tied to a result I measured.</p>
+    <blockquote class="quote">"Make it work, make it right, make it fast."<cite>— Kent Beck</cite></blockquote>
+    <div class="filters" id="filters">${["All", ...new Set(NOTES.flatMap(n => n.tags))].map((t, i) =>
+      `<button class="chip ${i === 0 ? "on" : ""}" data-filter="${t}">${t === "All" ? t : "#" + t}</button>`).join("")}</div>
+    <div id="posts">${NOTES.map(n => `
+      <article class="post" id="note-${n.id}" data-tags="${n.tags.join(" ")}">
+        <div class="post-head"><img class="photo" src="photo.jpg" alt=""><div><b>Yogesh Joshi</b><small>Lead Java Developer · Engineering note</small></div></div>
+        <h3>${n.title}</h3><p>${n.body}</p>
+        <div class="takeaway">${n.takeaway}</div>
+        <div class="hashtags">${n.tags.map(t => `<span>#${t}</span>`).join("")}</div>
+        <div class="post-foot"><span>From real project work</span><button data-share="${n.id}">Share ↗</button></div>
+      </article>`).join("")}</div>`,
+
+  lab: () => `<div class="eyebrow">The lab / practice beyond the day job</div>
+    <h1 class="view-title">How I think,<br><em>on a whiteboard.</em></h1>
+    <p class="lede">System designs I've worked through end to end, low-level designs I've practised, and the ground I've covered in DSA. The trade-offs are in my own words.</p>
+
+    <div class="lab-h"><h2>System design</h2><small>${Object.keys(HLD).length} designs · requirements → design → deep dives</small></div>
+    <div class="grid hld">${Object.entries(HLD).map(([k, d], i) => `
+      <a class="card" href="#/lab/${k}">
+        <div class="num"><span>HLD ${String(i + 1).padStart(2, "0")}</span><span>↗</span></div>
+        <div class="domain">${d.like}</div><h3>${d.name}</h3>
+        <div class="scale">${d.scale}</div>
+        <p>${d.summary}</p>
+        <div class="tags">${d.tags.map(t => `<span>${t}</span>`).join("")}</div>
+      </a>`).join("")}</div>
+
+    <div class="lab-h"><h2>Low-level design</h2><small>${LLD.length} problems practised · ${PATTERNS.length} patterns</small></div>
+    <div class="lld-grid">
+      ${OWN_CODE.map(([n, d]) => `<div class="lld own"><b>${n}</b><span>${d}</span></div>`).join("")}
+      ${LLD.map(([n, p]) => `<div class="lld"><b>${n}</b><span>${p}</span></div>`).join("")}
+    </div>
+    <div class="tags" style="margin-top:12px">${PATTERNS.map(p => `<span>${p}</span>`).join("")}</div>
+
+    <div class="lab-h"><h2>Data structures & algorithms</h2><small>Problem solving</small></div>
+    <div class="dsa-line">
+      <b>${DSA.solved ? `${DSA.solved} problems coded in Java` : "Striver's A2Z DSA sheet"}</b>
+      <span style="color:var(--ink-2)">Following Striver's sheets pattern by pattern, with written notes on the problems that taught me something.</span>
+      ${DSA.repo ? `<a href="${DSA.repo}" target="_blank" rel="noopener">View the code ↗</a>` : ""}
+      ${DSA.profile ? `<a href="${DSA.profile}" target="_blank" rel="noopener">Profile ↗</a>` : ""}
+    </div>
+    <div class="edu" style="margin-top:12px">${DSA.breakdown.map(([t, d]) => `<div><b>${t}</b>${d}</div>`).join("")}</div>
+
+    <div class="lab-h"><h2>What I've studied</h2><small>Topic map</small></div>
+    <div class="edu">${STUDIED.map(([area, items]) => `<div><b>${area}</b>${items.join(" · ")}</div>`).join("")}</div>
+
+    <p class="credits"><b>Learned from:</b> Hello Interview · Concept && Coding · Striver (takeUforward) · Gaurav Sen · Java Brains · CodeDecode. Designs and summaries on this page are my own write-ups.</p>`,
+
+  colophon: () => `<div class="eyebrow">Built with intention</div>
+    <h1 class="view-title">About this site.</h1>
+    <p class="lede">A portfolio you can talk to. Every answer is written in advance from my published experience, so nothing is invented on the fly.</p>
+    <ul style="color:var(--ink-2)">
+      <li>One static HTML file: no framework, no tracking, no cookies.</li>
+      <li>The job-fit explorer runs entirely in your browser; pasted text never leaves it.</li>
+      <li>Three visual styles, light and dark, and a layout that works on phones.</li>
+    </ul>
+    ${follow(["Ask my agent", "#/"], ["Selected work", "#/work"])}`
+};
+
+const projectView = key => {
+  const p = PROJECTS[key];
+  const keys = Object.keys(PROJECTS);
+  const i = keys.indexOf(key);
+  const prev = keys[(i - 1 + keys.length) % keys.length], next = keys[(i + 1) % keys.length];
+  return `<a href="#/work" style="text-decoration:none;font-size:13.5px">← Selected work</a>
+    <div class="detail-head"><div class="logo">${p.short}</div>
+      <div><h1>${p.name}${p.current ? `<span class="badge">Current role</span>` : ""}</h1>
+      <div class="detail-meta">${p.role}${p.client ? " · " + p.client : ""} · ${p.period} · ${p.place}</div></div></div>
+    <div class="tags" style="margin-top:12px">${p.stack.map(s => `<span>${s}</span>`).join("")}</div>
+    <div class="detail">
+      <div class="block-h">Overview</div>${p.overview.map(t => `<p>${t}</p>`).join("")}
+      <div class="block-h">Measured outcomes</div>
+      <div class="outcomes">${p.wins.map(([n, t]) => `<div class="outcome"><b>${n}</b><span>${t}</span></div>`).join("")}</div>
+      <div class="block-h">Scope & impact</div><ul>${p.scope.map(t => `<li>${t}</li>`).join("")}</ul>
+      ${p.leadership.length ? `<div class="block-h">Leadership</div><ul>${p.leadership.map(t => `<li>${t}</li>`).join("")}</ul>` : ""}
+      <div class="block-h">My contribution</div><p>${p.contribution}</p>
+    </div>
+    <div class="pager"><a href="#/work/${prev}">← ${PROJECTS[prev].name}</a><a href="#/work/${next}">${PROJECTS[next].name} →</a></div>`;
+};
+
+const labDetailView = key => {
+  const d = HLD[key];
+  const keys = Object.keys(HLD);
+  const i = keys.indexOf(key);
+  const prev = keys[(i - 1 + keys.length) % keys.length], next = keys[(i + 1) % keys.length];
+  return `<a href="#/lab" style="text-decoration:none;font-size:13.5px">← The lab</a>
+    <div class="eyebrow" style="margin-top:18px">System design · ${d.like}</div>
+    <h1 class="view-title" style="font-size:38px">${d.name}</h1>
+    <p class="lede">${d.summary}</p>
+    <div class="tags" style="margin-top:12px">${d.tags.map(t => `<span>${t}</span>`).join("")}</div>
+    <div class="detail">
+      <div class="block-h">Scale target</div><p>${d.scale}</p>
+      <div class="block-h">Design at a glance</div>
+      <div class="diagram">
+        ${d.flow.map((row, r) => `${r ? `<div class="down">↓</div>` : ""}<div class="flow-row">${row.map((n, c) =>
+          `${c ? `<span class="arrow">↔</span>` : ""}<div class="node ${r === 2 && c === 0 ? "hot" : ""}">${n}</div>`).join("")}</div>`).join("")}
+        <small>My simplified design · not a production architecture</small>
+      </div>
+      <div class="block-h">Key decisions</div>
+      ${d.decisions.map(([t, p]) => `<div class="decision"><b>${t}</b><p>${p}</p></div>`).join("")}
+      <div class="block-h">Trade-off I weighed</div>
+      <div class="tradeoff"><b>${d.tradeoff[0]}.</b> ${d.tradeoff[1]}</div>
+      ${d.link ? `<div class="block-h">Where I've done this for real</div><p>${d.link[1]} <a href="#/work/${d.link[0]}">${PROJECTS[d.link[0]].name} ↗</a></p>` : ""}
+    </div>
+    <div class="pager"><a href="#/lab/${prev}">← ${HLD[prev].name}</a><a href="#/lab/${next}">${HLD[next].name} →</a></div>`;
+};
+
+/* ---------- Fit explorer ---------- */
+const findTerms = (text, terms) => terms.filter(s => new RegExp(`(^|[^a-z])${s.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")}([^a-z]|$)`).test(text));
+const matchJobDescription = raw => {
+  const t = raw.toLowerCase();
+  const hits = findTerms(t, Object.keys(SKILL_EVIDENCE)).filter(s => !(s === "spring" && t.includes("spring boot")));
+  const gaps = findTerms(t, OTHER_TECH);
+  const years = t.match(/(\d+)\s*\+?\s*years/);
+  const evidence = s => {
+    const ps = SKILL_EVIDENCE[s];
+    const link = k => {
+      if (k === "lab") return `<a href="#/lab">The lab</a>`;
+      if (k.startsWith("lab:")) return `<a href="#/lab/${k.slice(4)}">${HLD[k.slice(4)].name} design</a>`;
+      return `<a href="#/work/${k}">${PROJECTS[k].name}</a>`;
+    };
+    return ps.length ? ps.map(link).join(", ") : "Listed in skills";
+  };
+  return `<h2>Here's where we connect.</h2>
+    <p class="fine">Areas from this description that are documented in my experience${years ? ` · the role asks for ${years[1]}+ years; I have 11+` : ""}.</p>
+    ${hits.length ? `<div class="checks">${hits.map(s => `<div class="check"><b>${labelOf(s)}</b><span>Evidence: ${evidence(s)}</span></div>`).join("")}</div>`
+      : `<p>No recognised technologies found. Try pasting the full requirements section.</p>`}
+    ${gaps.length ? `<div class="gap-box"><b>Worth a conversation</b><p class="fine" style="margin:4px 0 0">These named technologies are not specifically documented in my résumé:</p>
+      <div class="tags">${gaps.map(s => `<span>${labelOf(s)}</span>`).join("")}</div></div>` : ""}
+    <p class="fine" style="margin-top:16px">Unlisted requirements, seniority, depth and domain fit still need a human conversation. No match does not prove a lack of experience.</p>
+    ${follow(["See the evidence in selected work", "#/work"], ["Get in touch", "contact"])}`;
+};
+
+/* ---------- Right panel ---------- */
+const setSpotlight = key => {
+  spotlight = key;
+  const p = PROJECTS[key];
+  $("panel").innerHTML = `
+    <div class="eyebrow">In the spotlight</div>
+    <div class="panel-logo">${p.short}<span style="color:var(--warm)">*</span></div>
+    <div class="eyebrow" style="color:var(--warm)">${p.domain}</div>
+    <h2>${p.name}</h2>
+    <p class="tagline">${p.tagline}</p>
+    <p class="sub">${p.summary}</p>
+    <div class="tags">${p.stack.slice(0, 4).map(s => `<span>${s}</span>`).join("")}</div>
+    <div class="diagram">
+      <div class="diagram-h"><span>System at a glance</span><span style="color:var(--warm)">◆</span></div>
+      ${p.flow.map((n, i) => `${i ? `<div class="down">↓</div>` : ""}<div class="node ${i === 2 ? "hot" : ""}">${n}</div>`).join("")}
+      <small>Simplified illustration · not client architecture</small>
+    </div>
+    <div class="panel-label">My contribution</div>
+    <p class="contrib">${p.contribution}</p>
+    <a class="explore-btn" href="#/work/${key}">Explore this project <span>↗</span></a>
+    <button class="copy-link" data-copy-project="${key}">Copy project link ↗</button>
+    <div class="panel-label">Explore another</div>
+    <div class="proj-list">${Object.entries(PROJECTS).map(([k, q]) => `<a href="#/work/${k}" class="${k === key ? "on" : ""}">${q.name}<span>↗</span></a>`).join("")}</div>
+    <div class="closing"><span>✳</span>Good engineering starts<br>with a better question.</div>`;
+};
+
+/* ---------- Router ---------- */
+const CRUMBS = { agent: "A conversation with my work", work: "Selected work", lab: "The lab", journey: "The journey", fit: "Job fit explorer", notes: "Engineering notes", colophon: "Built with intention" };
+const route = () => {
+  const [, view = "", arg] = location.hash.split("/");
+  if (view === "resume") { location.hash = "#/"; window.open("Yogesh_Joshi_Resume_public.pdf", "_blank"); return; }
+  const isAgent = !view || !(view in VIEWS);
+  $("view-agent").hidden = !isAgent;
+  $("view-other").hidden = isAgent;
+  const current = isAgent ? "agent" : view;
+  document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", a.dataset.view === current));
+  $("crumb").textContent = CRUMBS[current] + (view === "work" && PROJECTS[arg] ? ` / ${PROJECTS[arg].name}` : "")
+    + (view === "lab" && HLD[arg] ? ` / ${HLD[arg].name}` : "");
+  if (!isAgent) {
+    $("view-other").innerHTML = view === "work" && PROJECTS[arg] ? projectView(arg)
+      : view === "lab" && HLD[arg] ? labDetailView(arg) : VIEWS[view]();
+    if (view === "work" && PROJECTS[arg]) setSpotlight(arg);
+    $("scroll").scrollTop = 0;
+    if (view === "notes" && arg) {
+      const post = $(`note-${arg}`);
+      if (post) { post.scrollIntoView({ block: "center" }); post.classList.add("flash"); }
+    }
+  }
+  $("side").classList.remove("open");
+};
+
+/* ---------- Events ---------- */
+document.addEventListener("click", e => {
+  const ask = e.target.closest("[data-ask]");
+  if (ask) { const k = ask.dataset.ask; respond(k, LABELS[k] || `Tell me about ${PROJECTS[k]?.name || k}.`); return; }
+  const go = e.target.closest("[data-go]");
+  if (go) { location.hash = go.dataset.go; return; }
+  const chip = e.target.closest("[data-persona]");
+  if (chip) { persona = chip.dataset.persona; document.querySelectorAll("[data-persona]").forEach(c => c.classList.toggle("on", c === chip)); return; }
+  const filter = e.target.closest("[data-filter]");
+  if (filter) {
+    const tag = filter.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach(c => c.classList.toggle("on", c === filter));
+    document.querySelectorAll(".post").forEach(p => { p.hidden = tag !== "All" && !p.dataset.tags.split(" ").includes(tag); });
+    return;
+  }
+  const share = e.target.closest("[data-share]");
+  if (share) { copy(`${location.href.split("#")[0]}#/notes/${share.dataset.share}`, "Note link copied"); return; }
+  const cp = e.target.closest("[data-copy-project]");
+  if (cp) { copy(`${location.href.split("#")[0]}#/work/${cp.dataset.copyProject}`, "Project link copied"); return; }
+  const action = e.target.closest("[data-action]")?.dataset.action;
+  if (action === "new") { $("thread").innerHTML = ""; $("hero").hidden = false; location.hash = "#/"; setSpotlight("qualys"); }
+  if (action === "match") { $("fit-result").innerHTML = matchJobDescription($("jd").value); $("fit-result").scrollIntoView({ behavior: "smooth" }); }
+});
+document.addEventListener("input", e => {
+  if (e.target.id === "jd") $("fit-go").disabled = e.target.value.trim().length < 30;
+});
+$("composer").addEventListener("submit", e => {
+  e.preventDefault();
+  const text = $("input").value.trim();
+  if (!text) return;
+  $("input").value = "";
+  respond(detectIntent(text), text);
+});
+$("menu").addEventListener("click", () => $("side").classList.toggle("open"));
+
+const savedStyle = (() => { try { return localStorage.getItem("yj-style"); } catch { return null; } })();
+if (savedStyle) { document.documentElement.dataset.style = savedStyle; $("style").value = savedStyle; }
+$("style").addEventListener("change", e => {
+  document.documentElement.dataset.style = e.target.value;
+  try { localStorage.setItem("yj-style", e.target.value); } catch {}
+});
+$("theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+});
+
+$("work-count").textContent = String(Object.keys(PROJECTS).length).padStart(2, "0");
+$("lab-count").textContent = String(Object.keys(HLD).length + LLD.length).padStart(2, "0");
+window.addEventListener("hashchange", route);
+setSpotlight("qualys");
+route();
+</script>
+</body>
+</html>
