@@ -544,70 +544,140 @@ const NOTES = [
 ];
 
 const HLD = {
-  payment: {
-    name: "Payment system", like: "Stripe-style", scale: "10K writes/s · money must never be lost or double-charged",
-    summary: "Card data that never touches the merchant, signed requests, and reconciliation driven by events instead of guesses.",
-    tags: ["Kafka", "CDC", "Postgres", "HSM"],
-    flow: [["Merchant page + SDK iframe", "Payment API (signed)"], ["Transactions DB · sharded by merchant"], ["CDC → Kafka"], ["Reconciliation service", "Card networks"]],
-    decisions: [
-      ["Card data skips the merchant entirely", "The SDK renders our iframe on the merchant page and encrypts the card with our public key in the browser. Only our servers, with the private key in an HSM, can read it."],
-      ["Every request is signed, not just keyed", "HMAC signature plus a nonce and timestamp. A nonce cache rejects replays, so a leaked request can't be resent."],
-      ["Write the intent before calling the network", "An attempt row goes in first and CDC turns it into an event. Success, failure and timeout each update that row, so there is always an audit trail."]
-    ],
-    tradeoff: ["A cron job polling 'pending' payments every 5 minutes", "Simple, but slow and it guesses. I'd rather send timeouts to a reconciliation service that asks the network directly and checks settlement files."],
-    link: ["fis", "This is the same idea I used at FIS: idempotency keys and reconciliation checks on Kafka removed ~$25K/month of manual work."]
-  },
-  ratelimiter: {
-    name: "Distributed rate limiter", like: "API gateway", scale: "1M requests/s · 100M daily users",
-    summary: "Token buckets in Redis, updated atomically, sharded so each client always lands on the same node.",
-    tags: ["Redis Cluster", "Lua", "Token bucket", "API gateway"],
-    flow: [["Client"], ["API gateway · limiter"], ["Redis Cluster · token buckets", "ZooKeeper · rules"], ["Backend services"]],
-    decisions: [
-      ["Token bucket over fixed windows", "Fixed windows let 2× the limit through at the boundary. A token bucket allows short bursts and a steady rate, with just two fields per client."],
-      ["One Lua script, not MULTI/EXEC", "With MULTI/EXEC the read still happens outside the transaction, so two gateways can spend the same token. A Lua script reads, refills and decrements in one atomic step."],
-      ["Shard by who is calling", "Hash the user ID, IP or API key so a client's bucket lives on one shard. Redis Cluster's hash slots do the routing: ~10 shards × 100K ops/s."]
-    ],
-    tradeoff: ["Fail open or fail closed when Redis is down", "Fail open keeps the API up but unprotected; fail closed protects it but takes it down. Replicas with automatic failover make the choice rarer, and every 429 carries Retry-After and rate-limit headers."],
-    link: ["qualys", "Same instincts as my Redis caching work at Qualys: keep the hot path in memory, make updates atomic, and tune expiry per key type."]
-  },
   ticketing: {
-    name: "Ticket booking", like: "Ticketmaster / BookMyShow", scale: "Tens of millions viewing during a big on-sale",
-    summary: "Seat holds that expire on their own, consistent bookings, and a waiting room for the biggest events.",
-    tags: ["Redis lock", "Postgres", "Elasticsearch", "WebSocket"],
-    flow: [["Virtual waiting queue (hot events)"], ["Booking service · reserve → confirm"], ["Redis seat lock · 10-min TTL", "Postgres · tickets & seats"], ["CDC → Elasticsearch search"]],
+    name: "Ticketmaster", like: "Ticket booking", src: "ticketmaster",
+    scale: "10M users hitting one event · reads outnumber writes 100:1",
+    summary: "No double bookings, seat holds that expire on their own, and a waiting room for the biggest on-sales.",
+    tags: ["Redis lock", "Postgres", "Elasticsearch", "CDC", "SSE"],
+    flow: [["Virtual waiting queue (hot events)"], ["Booking service · reserve → confirm"], ["Redis seat lock · TTL", "Postgres · tickets & bookings"], ["CDC → Elasticsearch search"]],
     decisions: [
-      ["Hold seats with a TTL lock, not a status column", "My first design stored 'reserved' plus a timestamp and a cron job to release seats, which misses edge cases. A Redis lock with a 10-minute TTL frees the seat by itself."],
-      ["Postgres for the booking itself", "Two users must never get one seat, so the ticket and ticket-seat tables live in a strongly consistent database."],
-      ["Admit people in batches for huge events", "A virtual queue over WebSocket lets ~100 users at a time into the seat map, so the booking path never melts."]
+      ["Hold seats with a TTL lock", "A status column plus a cron job to release seats misses edge cases. A Redis lock with an expiry frees the seat by itself, and Postgres keeps the final booking consistent."],
+      ["Cache what rarely changes, scale reads wide", "Event, venue and performer data barely changes, so cache it hard and keep the stateless event service horizontally scaled behind a load balancer."],
+      ["Let people in gradually", "For mega events, users wait in a virtual queue and are admitted in batches, so the seat map and booking path never get the full stampede."],
+      ["Search through Elasticsearch", "Postgres stays the source of truth. CDC keeps an Elasticsearch index in sync for fast text, date and location search, with frequent queries cached."]
     ],
-    tradeoff: ["Long polling vs SSE vs WebSockets for live seat updates", "Fine for normal events, but none of them saves a Taylor Swift on-sale. Controlling how many people enter beats pushing updates to everyone."],
+    tradeoff: ["SSE for live seat updates vs a waiting room", "Pushing seat changes to everyone is fine for normal events but does not survive a huge on-sale. Controlling how many people are inside matters more than updating all of them."],
     link: null
   },
-  auction: {
-    name: "Online auction", like: "eBay-style bidding", scale: "10M concurrent auctions",
-    summary: "Correct highest bid under contention, no lost bids during the final-minute rush, and live updates to every watcher.",
-    tags: ["Kafka", "OCC", "SSE", "Redis Pub/Sub"],
-    flow: [["Bidder"], ["API gateway → Kafka (ordered per auction)"], ["Bid service · OCC on auction row"], ["Redis Pub/Sub → SSE servers → watchers"]],
+  whatsapp: {
+    name: "WhatsApp", like: "Chat messaging", src: "whatsapp",
+    scale: "Billions of users · groups up to 100 · offline delivery for 30 days",
+    summary: "Real-time delivery over WebSockets, messages that wait for offline users, and routing across many chat servers.",
+    tags: ["WebSocket", "Redis Pub/Sub", "DynamoDB", "S3", "Push"],
+    flow: [["Client · WebSocket"], ["Chat servers (stateful connections)"], ["Redis Pub/Sub · routing", "DynamoDB · chats, messages, inbox"], ["S3 pre-signed media · push notifications"]],
     decisions: [
-      ["Lock one row, briefly, or not at all", "SELECT … FOR UPDATE on every bid serialises the auction. Keeping the max bid on the auction row means one short lock, or optimistic concurrency with a version check."],
-      ["Kafka before the database", "Bids land in Kafka first: durable, ordered (so a tie goes to the first bidder) and buffered for the final-minute spike."],
-      ["SSE for updates, Pub/Sub to fan out", "Updates only flow one way, so SSE is lighter than WebSockets. Pub/Sub tells every server about a new bid so all watchers see it."]
+      ["Keep media out of the message path", "The client uploads to blob storage with a pre-signed URL and sends only a link in the message. Storing attachments in the database or pushing them through chat servers wastes both."],
+      ["Route between servers with pub/sub", "Hashing users onto chat servers works but makes scaling painful. With Redis Pub/Sub, each server subscribes for the users it holds and any server can publish to them."],
+      ["Inbox per device for offline delivery", "Each message is written to the recipient's inbox, and removed once the client acknowledges it. Multiple devices get their own rows."],
+      ["Do not trust TCP to detect dead connections", "App-level heartbeats find broken sockets quickly. Per-chat sequence numbers, carried on the heartbeat, let a client spot a gap and refetch."]
     ],
-    tradeoff: ["Distributed lock vs optimistic concurrency", "A distributed lock is right when you hold it for minutes, like a ticket seat. A bid holds for milliseconds, so OCC or a single-row lock is simpler and faster."],
+    tradeoff: ["Pub/Sub is fire-and-forget", "Redis can drop a message, so delivery cannot depend on it alone. The inbox plus sequence numbers make the system recover from lost messages instead of preventing every loss."],
+    link: null
+  },
+  instagram: {
+    name: "Instagram", like: "Photo & video sharing", src: "instagram",
+    scale: "500M daily users · photos up to 8 MB, videos up to 4 GB · feed under 500 ms",
+    summary: "Precomputed feeds for fast reads, chunked uploads straight to storage, and a CDN that serves media close to the viewer.",
+    tags: ["DynamoDB", "Redis", "S3 multipart", "CDN", "Fan-out"],
+    flow: [["Client"], ["Post service · Follow service"], ["DynamoDB · posts, follows", "Redis · precomputed feeds"], ["S3 multipart upload → CDN delivery"]],
+    decisions: [
+      ["Precompute feeds (fan-out on write)", "Building a feed on read means thousands of queries per refresh for users who follow many accounts. When someone posts, async workers push the post ID into followers' feeds instead."],
+      ["Hybrid for accounts with huge followings", "Writing a celebrity post to millions of feeds is too costly, so skip them and merge their recent posts at read time."],
+      ["Upload large media in chunks, directly to storage", "The post call returns a pre-signed multipart upload URL. A storage event, not the client, marks the media as complete."],
+      ["Serve media from a CDN with optimisation", "Edge caching cuts latency worldwide, and resizing or reformatting per device saves bandwidth."]
+    ],
+    tradeoff: ["Fan-out on write vs on read", "Writes get more expensive and storage grows, but reads become a single lookup. For a read-dominated product that is the right trade, as long as Redis feeds are made durable with persistence and failover."],
+    link: null
+  },
+  newsfeed: {
+    name: "Facebook News Feed", like: "Social feed", src: "fb-news-feed",
+    scale: "Users following thousands of accounts · accounts with millions of followers",
+    summary: "A feed that stays fast whether you follow 10 people or 10,000, and a post that survives its author being a celebrity.",
+    tags: ["DynamoDB GSI", "Async workers", "Redis cache", "Cursor paging"],
+    flow: [["Client · cursor pagination"], ["Feed service"], ["Follow index · Post index (DynamoDB)", "Precomputed feed store"], ["Async workers ← post queue", "Replicated post cache"]],
+    decisions: [
+      ["Index the follow graph both ways", "A secondary index flips follower and following so one lookup answers both 'who do I follow' and 'who follows me'."],
+      ["Precompute feeds with async workers", "A post goes onto a queue and a worker pool writes its ID into every follower's feed. Blasting synchronous requests at the database does not hold up."],
+      ["Hybrid feeds for celebrities", "Skip fan-out for huge accounts. The feed service merges the precomputed feed with their recent posts at read time."],
+      ["Spread hot posts across cache copies", "A viral post can overload one cache key, so store several copies under suffixed keys and read from a random one."]
+    ],
+    tradeoff: ["Fan-out cost vs read-time merging", "Precomputing makes reads cheap but multiplies writes. A follower-count threshold decides which accounts get fanned out and which get merged on read."],
+    link: null
+  },
+  tinder: {
+    name: "Tinder", like: "Dating app", src: "tinder",
+    scale: "20M daily users · ~100 swipes each per day · stack in under 300 ms",
+    summary: "Swipes that never miss a mutual match, and a stack of profiles that is fast, nearby and never repeats.",
+    tags: ["Cassandra", "Redis", "Elasticsearch", "Bloom filter", "Push"],
+    flow: [["Client"], ["Profile service", "Swipe service"], ["Postgres + Elasticsearch · profiles", "Cassandra or Redis · swipes"], ["Match → push notification (APNs/FCM)"]],
+    decisions: [
+      ["Make mutual swipes consistent", "If two people swipe on each other at the same moment, eventually consistent replicas can each miss the other's swipe and no match fires. Keep both directions of a pair together and update atomically, in one partition or with Redis."],
+      ["Build the stack from precomputed results plus a live index", "A pure precompute goes stale when someone moves or changes preferences. An indexed geo query alone is slow. Combining both gives speed and freshness."],
+      ["Never repeat a profile", "Keep a per-user cache of already-swiped IDs, with a Bloom filter for cheap membership tests, instead of querying the swipe store on every request."],
+      ["Notify on match", "The second swiper sees the match instantly, and the first gets a push notification."]
+    ],
+    tradeoff: ["Cassandra writes vs consistency", "Cassandra handles the swipe volume but is eventually consistent. Using single-partition transactions, or Redis for atomic checks, fixes the match race without giving up the write throughput."],
+    link: null
+  },
+  youtube: {
+    name: "YouTube", like: "Video streaming", src: "youtube",
+    scale: "1M uploads and 100M views a day · videos of tens of GB",
+    summary: "Resumable uploads, video turned into small multi-quality segments, and adaptive streaming from a CDN.",
+    tags: ["S3 multipart", "Transcoding", "HLS / DASH", "CDN", "Adaptive bitrate"],
+    flow: [["Client · resumable chunked upload"], ["Video service · metadata DB"], ["Blob storage → processing pipeline (segment, transcode)"], ["Segments + manifest → CDN → adaptive player"]],
+    decisions: [
+      ["Upload directly, in resumable chunks", "Pre-signed multipart uploads send big files straight to storage. A dropped connection resumes at the last chunk instead of restarting."],
+      ["Store video as small segments at several qualities", "A processing pipeline cuts the original into short segments and transcodes each into multiple resolutions. A manifest lists them."],
+      ["Adaptive bitrate streaming", "The player downloads one segment at a time and picks the quality to match its current bandwidth, so playback survives a slow network."],
+      ["CDN for delivery, scale processing on load", "Popular segments are cached near viewers. Processing workers scale out on queue depth or CPU."]
+    ],
+    tradeoff: ["Storing many renditions", "Keeping each video in several qualities costs storage and processing time, but it is what makes playback smooth on weak connections and avoids transcoding at watch time."],
+    link: null
+  },
+  livecomments: {
+    name: "Facebook Live Comments", like: "Real-time comments", src: "fb-live-comments",
+    scale: "Millions of concurrent viewers · thousands of comments a second per video · under 200 ms",
+    summary: "Comments that appear almost instantly for every viewer, a scrollable history, and fan-out that survives a viral stream.",
+    tags: ["SSE", "DynamoDB", "Pub/Sub", "Dispatcher", "Cursor paging"],
+    flow: [["Commenter · POST comment"], ["Comment service → DynamoDB"], ["Partitioned pub/sub or dispatcher"], ["Realtime servers · SSE to viewers"]],
+    decisions: [
+      ["Page history with a cursor", "Offset paging breaks on a feed that keeps growing, since new comments shift every offset. A cursor from the last comment ID stays stable."],
+      ["Use SSE rather than WebSockets", "Viewers only receive comments, so one-way server push over plain HTTP is simpler and lighter."],
+      ["Stop every server from handling every comment", "With naive pub/sub, every realtime server processes all comments. Partition channels by video and keep viewers of the same video on the same servers, or use a dispatcher that knows which server holds which viewers."],
+      ["Recover from disconnects", "The client tracks the last event ID it saw and resumes from there on reconnect."]
+    ],
+    tradeoff: ["Pub/sub vs a dispatcher service", "Pub/sub is easy to start with. A dispatcher gives exact routing, at the cost of keeping a live map of servers and videos. For extreme streams, show a sampled subset or serve snapshots through a CDN."],
     link: null
   },
   rides: {
-    name: "Ride hailing", like: "Uber-style matching", scale: "~600K driver location updates/s",
-    summary: "Fast nearby-driver search, one ride offer per driver at a time, and matching that survives a stadium emptying.",
-    tags: ["Redis GEO", "Distributed lock", "Queues", "Postgres"],
+    name: "Uber", like: "Ride hailing", src: "uber",
+    scale: "Match within a minute · 100K ride requests from one spot",
+    summary: "Fast nearby-driver search, one offer per driver at a time, and matching that survives a stadium emptying.",
+    tags: ["Redis GEO", "Distributed lock", "Queues", "Geo-sharding"],
     flow: [["Driver app · adaptive updates", "Rider app"], ["Location service → Redis GEO", "Ride service · fares"], ["Matching service ← regional queue"], ["Driver lock (TTL) → push offer"]],
     decisions: [
-      ["Redis geohash for locations", "A quadtree in Postgres can't absorb 600K writes a second. Redis GEO handles the writes and answers 'drivers near me' in memory."],
-      ["Send fewer updates from the app", "The driver app skips updates when offline or parked, which cuts write volume before it reaches the server."],
-      ["One offer per driver at a time", "A short TTL lock on the driver stops several matching instances from offering the same driver ten rides at once."]
+      ["Keep driver locations in an in-memory geo store", "Constant location writes would crush a regular database. An in-memory geospatial index handles the writes and answers 'who is nearby' quickly."],
+      ["Reduce updates at the source", "The driver app sends updates less often when parked or idle, and more often when moving, cutting load without losing accuracy."],
+      ["Offer a ride to one driver at a time", "A distributed lock with a short TTL stops several requests being sent to the same driver, and frees the driver automatically if no reply comes."],
+      ["Queue requests and scale the matchers", "A queue, partitioned by region, absorbs surges so no request is dropped. Delayed retries, or a durable workflow, move on when a driver does not respond."]
     ],
-    tradeoff: ["Scaling matchers vs queueing requests", "After an IPL match everyone requests at once. A queue partitioned by region absorbs the burst and stops one area starving the others."],
+    tradeoff: ["Lock with a TTL vs a status column", "A status in the database needs manual timeout handling and is easy to get wrong. A TTL lock expires on its own, which makes the no-reply case simple."],
     link: null
+  },
+  payment: {
+    name: "Payment system", like: "Stripe-style payments", src: "payment-system",
+    scale: "10K transactions a second · money must never be lost or double-charged",
+    summary: "Card data that never touches the merchant, signed requests, and reconciliation driven by events instead of guesses.",
+    tags: ["Kafka", "CDC", "Postgres", "HSM", "Webhooks"],
+    flow: [["Merchant page + SDK iframe", "Payment API (signed)"], ["Transactions DB · sharded by merchant"], ["CDC → event stream"], ["Reconciliation service", "Card networks"]],
+    decisions: [
+      ["Card data skips the merchant entirely", "An SDK iframe on the merchant page encrypts the card with our public key in the browser. Only our servers, with the private key in an HSM, can read it."],
+      ["Sign every request, not just key it", "An HMAC signature with a nonce and timestamp lets us reject replayed requests."],
+      ["Never lose a transaction", "Writes to the database emit change events through CDC into an event stream, giving an immutable audit trail. Running several streams guards against the CDC itself failing."],
+      ["Record the attempt before calling the network", "Success, failure and timeout each update that record. A reconciliation service resolves timeouts by asking the network and by reading settlement files, instead of assuming failure."]
+    ],
+    tradeoff: ["Polling pending payments vs event-driven reconciliation", "A cron job that rechecks pending payments is simple but slow and guesses. Events plus reconciliation use authoritative network data, and the same stream also drives webhooks to merchants."],
+    link: ["fis", "This is the same idea I used at FIS: idempotency keys and reconciliation checks on Kafka removed ~$25K/month of manual work."]
   }
 };
 
@@ -653,15 +723,15 @@ const SKILL_EVIDENCE = {
   "event-driven": ["qualys", "fis"], "distributed systems": ["qualys"], "fintech": ["fis"], "banking": ["citi", "tcs"],
   "payments": ["tcs", "fis"], "team lead": ["qualys", "fis"], "leadership": ["qualys", "fis"], "mentoring": ["qualys", "fis"],
   "full stack": ["qualys", "citi"], "hibernate": [], "jpa": [], "elk": [], "ec2": [], "azure": [], "agile": [], "safe": [],
-  "system design": ["lab:payment", "lab:ratelimiter", "lab:ticketing"], "low level design": ["lab"], "lld": ["lab"], "design patterns": ["lab"],
-  "data structures": ["lab"], "algorithms": ["lab"], "websocket": ["lab:ticketing"], "websockets": ["lab:ticketing"],
+  "system design": ["lab:payment", "lab:ticketing", "lab:whatsapp", "lab:rides"], "low level design": ["lab"], "lld": ["lab"], "design patterns": ["lab"],
+  "data structures": ["lab"], "algorithms": ["lab"], "websocket": ["lab:whatsapp"], "websockets": ["lab:whatsapp"], "sse": ["lab:livecomments"], "cdn": ["lab:youtube", "lab:instagram"],
   "junit": ["lab"], "mockito": ["lab"], "circuit breaker": ["lab"], "resilience4j": ["lab"], "multithreading": ["lab"], "concurrency": ["lab"]
 };
 const OTHER_TECH = ["graphql", "terraform", "golang", "python", "kotlin", "node.js", "mongodb", "postgresql", "gcp", "rabbitmq",
   "cassandra", "scala", "rust", "c#", ".net", "vue", "snowflake", "spark", "airflow", "kubernetes operators", "istio", "datadog", "splunk"];
 const SKILL_LABEL = { "ci/cd": "CI/CD", "aws": "AWS", "s3": "S3", "jwt": "JWT", "sql": "SQL", "rest": "REST APIs", "elk": "ELK", "ec2": "EC2", "safe": "SAFe", "jpa": "JPA", "oauth2": "OAuth2",
   "graphql": "GraphQL", "gcp": "GCP", "mongodb": "MongoDB", "postgresql": "PostgreSQL", "node.js": "Node.js", "c#": "C#", ".net": ".NET", "rabbitmq": "RabbitMQ",
-  "junit": "JUnit", "websocket": "WebSocket", "websockets": "WebSockets", "lld": "LLD", "resilience4j": "Resilience4j" };
+  "cdn": "CDN", "sse": "SSE", "junit": "JUnit", "websocket": "WebSocket", "websockets": "WebSockets", "lld": "LLD", "resilience4j": "Resilience4j" };
 
 let persona = "visitor";
 let spotlight = "qualys";
@@ -779,9 +849,13 @@ Object.entries(PROJECTS).forEach(([key, p]) => {
 const INTENTS = [
   ["contact", /contact|email|reach|hire|linkedin|phone|available|relocat/],
   ["qualys", /qualys/], ["citi", /citi|ltim|mindtree/], ["fis", /\bfis\b|getpaid/], ["tcs", /\btcs\b|tata consultancy/],
-  ["hld-ratelimiter", /rate.?limit|throttl|token bucket/],
   ["hld-ticketing", /ticket|bookmyshow|book my show|seat/],
-  ["hld-auction", /auction|\bbid/],
+  ["hld-whatsapp", /whatsapp|chat app|messaging app|chat messag/],
+  ["hld-instagram", /instagram|photo sharing/],
+  ["hld-newsfeed", /news.?feed|timeline|fan.?out/],
+  ["hld-tinder", /tinder|dating|swipe/],
+  ["hld-youtube", /youtube|video streaming|adaptive bitrate|transcod/],
+  ["hld-livecomments", /live.?comment/],
   ["hld-rides", /uber|\bride\b|\brides\b|ride.?hail|driver|geospatial/],
   ["hld-payment", /stripe|design (a |your )?payment|payment (system|gateway) design/],
   ["dsa", /dsa|leetcode|striver|algorithm|data structure|problem solving/],
@@ -889,7 +963,7 @@ const VIEWS = {
 
   lab: () => `<div class="eyebrow">The lab / practice beyond the day job</div>
     <h1 class="view-title">How I think,<br><em>on a whiteboard.</em></h1>
-    <p class="lede">System designs I've worked through end to end, low-level designs I've practised, and the ground I've covered in DSA. The trade-offs are in my own words.</p>
+    <p class="lede">System designs I've worked through end to end, low-level designs I've practised, and the ground I've covered in DSA. The summaries and diagrams are my own, practised with Hello Interview's problem breakdowns.</p>
 
     <div class="lab-h"><h2>System design</h2><small>${Object.keys(HLD).length} designs · requirements → design → deep dives</small></div>
     <div class="grid hld">${Object.entries(HLD).map(([k, d], i) => `
@@ -976,6 +1050,7 @@ const labDetailView = key => {
       ${d.decisions.map(([t, p]) => `<div class="decision"><b>${t}</b><p>${p}</p></div>`).join("")}
       <div class="block-h">Trade-off I weighed</div>
       <div class="tradeoff"><b>${d.tradeoff[0]}.</b> ${d.tradeoff[1]}</div>
+      <p class="fine" style="margin-top:18px">Practised with <a href="https://www.hellointerview.com/learn/system-design/problem-breakdowns/${d.src}" target="_blank" rel="noopener">Hello Interview's ${d.name} breakdown ↗</a>. The summary and diagram are my own.</p>
       ${d.link ? `<div class="block-h">Where I've done this for real</div><p>${d.link[1]} <a href="#/work/${d.link[0]}">${PROJECTS[d.link[0]].name} ↗</a></p>` : ""}
     </div>
     <div class="pager"><a href="#/lab/${prev}">← ${HLD[prev].name}</a><a href="#/lab/${next}">${HLD[next].name} →</a></div>`;
